@@ -84,7 +84,7 @@ export function Contact() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-white">Email Support</h3>
-                  <p className="text-gray-400">support@pitchintel.ai</p>
+                  <p className="text-gray-400">support@pitchintel.tech</p>
                 </div>
               </div>
 
@@ -99,7 +99,7 @@ export function Contact() {
               </div>
             </div>
 
-            <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-xl p-6">
+            {/* <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-xl p-6">
               <h3 className="text-lg font-semibold text-white mb-3">Enterprise Solutions</h3>
               <p className="text-gray-400 text-sm mb-4">
                 Looking for custom integrations, white-label solutions, or enterprise pricing? 
@@ -108,7 +108,7 @@ export function Contact() {
               <div className="text-blue-400 text-sm font-medium">
                 enterprise@pitchintel.ai
               </div>
-            </div>
+            </div> */}
           </motion.div>
 
           {/* Right Column - Contact Form */}

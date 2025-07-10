@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Brain, Mail, Lock, Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react'
+import { Mail, Lock, Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 
 export function Login() {
@@ -34,22 +34,6 @@ export function Login() {
       }
     } catch (err) {
       setError('An unexpected error occurred')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const handleDemoLogin = async () => {
-    setLoading(true)
-    setError('')
-    
-    try {
-      const { error } = await signIn('demo@pitchintel.ai', 'demo123')
-      if (error) {
-        setError('Demo login failed. Please try again.')
-      }
-    } catch (err) {
-      setError('Demo login failed. Please try again.')
     } finally {
       setLoading(false)
     }
