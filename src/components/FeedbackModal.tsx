@@ -30,7 +30,6 @@ export function FeedbackModal({ isOpen, onClose, trigger = 'navigation' }: Feedb
     if (!rating) return
 
     setIsSubmitting(true)
-    let emailError = false
     try {
       await emailjs.send(
         EMAILJS_SERVICE_ID,
@@ -42,7 +41,6 @@ export function FeedbackModal({ isOpen, onClose, trigger = 'navigation' }: Feedb
         EMAILJS_USER_ID
       )
     } catch (err) {
-      emailError = true
       alert('Failed to send feedback email. Please try again later.')
     }
     

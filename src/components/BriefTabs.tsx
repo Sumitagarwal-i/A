@@ -251,7 +251,7 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
                 <div className="bg-gray-800/30 rounded-xl p-6">
                   <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                     <TrendingUp className="w-5 h-5 text-green-400" />
-                    🔍 Key Signals
+                     Key Signals
                   </h4>
                   <ul className="space-y-3">
                     <li className="flex items-start gap-3">
@@ -279,7 +279,7 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
                 <div className="bg-gray-800/30 rounded-xl p-6">
                   <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                     <Brain className="w-5 h-5 text-purple-400" />
-                    🧠 Inferred Priorities
+                     Inferred Priorities
                   </h4>
                   <p className="text-gray-300 leading-relaxed">
                     Based on their hiring patterns and technology signals, {brief.companyName} is prioritizing {insights.isScaling ? 'rapid scaling operations' : 'operational optimization'}.
@@ -291,7 +291,7 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
                 <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-xl p-6">
                   <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                     <Target className="w-5 h-5 text-green-400" />
-                    🎯 Strategic Angle for Your {insights.userContext.userProduct}
+                     Strategic Angle for Your {insights.userContext.userProduct}
                   </h4>
                   <p className="text-gray-300 leading-relaxed">
                     The convergence of their {insights.sentiment} market position, {insights.emotion} emotional state, and {insights.isScaling ? 'scaling' : 'optimization'} phase creates perfect timing for your {insights.userContext.userProduct}. 
@@ -349,7 +349,7 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
                 <div className="bg-gray-800/30 rounded-xl p-6">
                   <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
                     <Zap className="w-5 h-5 text-yellow-400" />
-                    📌 Positioning Angle
+                     Positioning Angle
                   </h4>
                   <p className="text-gray-300 leading-relaxed">
                     Your {insights.userContext.userProduct} fits perfectly with {brief.companyName}'s {insights.sentiment} market position and {insights.isScaling ? 'aggressive scaling needs' : 'operational optimization goals'}. 
@@ -360,7 +360,7 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
                 <div className="bg-gray-800/30 rounded-xl p-6">
                   <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
                     <Brain className="w-5 h-5 text-blue-400" />
-                    🧠 Primary Hook
+                     Primary Hook
                   </h4>
                   <p className="text-gray-300 leading-relaxed">
                     "{brief.companyName}'s {insights.isScaling ? 'rapid expansion' : 'strategic growth'} across {insights.topRoles.join(', ')} teams creates the perfect opportunity for your {insights.userContext.userProduct} to deliver immediate impact. 
@@ -371,7 +371,7 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
                 <div className="bg-gray-800/30 rounded-xl p-6">
                   <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                     <AlertTriangle className="w-5 h-5 text-red-400" />
-                    ❗ Pain Points Your {insights.userContext.userProduct} Solves
+                     Pain Points Your {insights.userContext.userProduct} Solves
                   </h4>
                   <ul className="space-y-3">
                     {insights.isScaling && (
@@ -435,7 +435,7 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
                 <div className="bg-gray-800/30 rounded-xl p-6">
                   <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                     <Building2 className="w-5 h-5 text-purple-400" />
-                    📣 Messaging Themes for Your {insights.userContext.userIndustry} Solution
+                     Messaging Themes for Your {insights.userContext.userIndustry} Solution
                   </h4>
                   <div className="grid md:grid-cols-3 gap-4">
                     <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4 text-center">
@@ -453,7 +453,7 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
                 <div className="bg-gray-800/30 rounded-xl p-6">
                   <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                     <Shield className="w-5 h-5 text-yellow-400" />
-                    🚧 Objections to Anticipate
+                     Objections to Anticipate
                   </h4>
                   <div className="space-y-4">
                     <div className="border-l-4 border-yellow-500/30 pl-4">
@@ -470,7 +470,7 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
                 <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-xl p-6">
                   <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
                     <Calendar className="w-5 h-5 text-green-400" />
-                    📥 Suggested CTA
+                     Suggested CTA
                   </h4>
                   <p className="text-gray-300 leading-relaxed">
                     "Happy to share a 5-minute async audit on your {insights.isScaling ? 'scaling' : 'operational'} signals and how companies like {brief.companyName} typically optimize {insights.userContext.userValue} with our {insights.userContext.userProduct}."
@@ -588,7 +588,7 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
             <div className="bg-gradient-to-br from-red-500/10 to-orange-500/10 border border-red-500/20 rounded-2xl p-8">
               <div className="flex items-center gap-3 mb-6">
                 <AlertTriangle className="w-6 h-6 text-red-400" />
-                <h3 className="text-2xl font-semibold text-white">❌ What NOT to Pitch to {brief.companyName}</h3>
+                <h3 className="text-2xl font-semibold text-white"> What NOT to Pitch to {brief.companyName}</h3>
               </div>
               
               <div className="space-y-6">

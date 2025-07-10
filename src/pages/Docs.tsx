@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { BookOpen, Zap, Target, TrendingUp, Database, HelpCircle } from 'lucide-react'
 import { Navigation } from '../components/Navigation'
+import { Link } from 'react-router-dom'
 
 export function Docs() {
   const sections = [
@@ -260,20 +261,19 @@ export function Docs() {
             Can't find what you're looking for? Our team is here to help you succeed with IntelliBrief.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-6 py-3 bg-primary-600 hover:bg-primary-500 text-white rounded-lg font-medium transition-colors"
+            <Link
+              to="/contact"
+              className="px-6 py-3 bg-primary-600 hover:bg-primary-500 text-white rounded-lg font-medium transition-colors flex items-center justify-center"
             >
               Contact Support
-            </motion.button>
-            <motion.button
+            </Link>
+            {/* <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-6 py-3 bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700 hover:border-gray-600 rounded-lg font-medium transition-colors"
             >
               Join Community
-            </motion.button>
+            </motion.button> */}
           </div>
         </motion.div>
       </div>

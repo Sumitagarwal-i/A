@@ -14,6 +14,7 @@ import { Help } from './pages/Help'
 import { Pricing } from './pages/Pricing'
 import { Docs } from './pages/Docs'
 import Updates from './pages/Updates'
+import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
           </Router>
         </FeedbackProvider>
       </ThemeProvider>
+      <VercelAnalytics/>
     </AuthProvider>
   )
 }

@@ -379,10 +379,13 @@ export function Pricing() {
               <Zap className="w-5 h-5" />
               Start Free Trial
             </Link>
-            <button className="inline-flex items-center gap-2 px-8 py-4 bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-gray-600 text-gray-300 hover:text-white rounded-xl font-semibold text-lg transition-all duration-200">
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-gray-600 text-gray-300 hover:text-white rounded-xl font-semibold text-lg transition-all duration-200"
+            >
               <Users className="w-5 h-5" />
               Contact Sales
-            </button>
+            </Link>
           </div>
         </motion.div>
       </div>
