@@ -15,7 +15,7 @@ import { Pricing } from './pages/Pricing'
 import { Docs } from './pages/Docs'
 import Updates from './pages/Updates'
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
-
+import { SpeedInsights } from "@vercel/speed-insights/react"
 function App() {
   return (
     <AuthProvider>
@@ -55,6 +55,7 @@ function App() {
         </FeedbackProvider>
       </ThemeProvider>
       <VercelAnalytics/>
+      <SpeedInsights/>
     </AuthProvider>
   )
 }
