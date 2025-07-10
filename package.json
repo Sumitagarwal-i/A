@@ -16,6 +16,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0",
     "aos": "^2.3.4",
+    "emailjs-com": "^3.2.0",
     "framer-motion": "^10.16.16",
     "lovable-tagger": "^1.1.8",
     "lucide-react": "^0.344.0",

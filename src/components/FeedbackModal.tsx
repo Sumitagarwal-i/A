@@ -7,6 +7,7 @@ import {
   Send,
   CheckCircle
 } from 'lucide-react'
+import emailjs from 'emailjs-com'
 
 interface FeedbackModalProps {
   isOpen: boolean
@@ -20,11 +21,30 @@ export function FeedbackModal({ isOpen, onClose, trigger = 'navigation' }: Feedb
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
+  const EMAILJS_SERVICE_ID = "service_k45lxxm"
+  const EMAILJS_TEMPLATE_ID = "template_6vvb8z9"
+  const EMAILJS_USER_ID = "WCDLs933siaszXpig"
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!rating) return
 
     setIsSubmitting(true)
+    let emailError = false
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          rating: rating.toString(),
+          feedback,
+        },
+        EMAILJS_USER_ID
+      )
+    } catch (err) {
+      emailError = true
+      alert('Failed to send feedback email. Please try again later.')
+    }
     
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000))
