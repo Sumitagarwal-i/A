@@ -4,7 +4,7 @@ import { Brain, Mail, Lock, Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide
 import { useAuth } from '../contexts/AuthContext'
 
 export function Login() {
-  const { signIn, signUp } = useAuth()
+  const { signIn, signUp, signInWithGoogle } = useAuth()
   const [isSignUp, setIsSignUp] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -108,19 +108,34 @@ export function Login() {
         <div className="bg-gray-900 border border-gray-800 rounded-2xl p-8">
           {/* Header */}
           <div className="text-center mb-8">
-            <motion.div
-              whileHover={{ scale: 1.05, rotate: 5 }}
-              className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg"
-            >
-              <Brain className="w-8 h-8 text-white" />
-            </motion.div>
+            {/* Removed PitchIntel logo and name */}
             <h1 className="text-2xl font-bold text-white mb-2">
-              Welcome to PitchIntel
-            </h1>
-            <p className="text-gray-400">
               {isSignUp ? 'Create your account' : 'Sign in to your account'}
-            </p>
+            </h1>
           </div>
+
+          {/* Google Auth Button */}
+          <button
+            type="button"
+            onClick={async () => {
+              setLoading(true)
+              setError("")
+              try {
+                const { error } = await signInWithGoogle()
+                if (error) setError(error.message)
+              } catch (err) {
+                setError("Google sign in failed. Please try again.")
+              } finally {
+                setLoading(false)
+              }
+            }}
+            className="w-full flex items-center justify-center gap-2 bg-white text-gray-900 font-semibold py-3 px-6 rounded-lg shadow hover:bg-gray-100 transition-colors mb-6 border border-gray-300"
+            disabled={loading}
+          >
+            {/* Official Google Logo */}
+            <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" className="w-5 h-5" />
+            Continue with Google
+          </button>
 
           {/* Error Message */}
           {error && (
@@ -133,24 +148,6 @@ export function Login() {
               <span className="text-sm">{error}</span>
             </motion.div>
           )}
-
-          {/* Demo Account Info */}
-          <div className="mb-6 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-medium text-blue-300">Try Demo Account</h3>
-              <button
-                onClick={handleDemoLogin}
-                disabled={loading}
-                className="px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white text-xs rounded transition-colors disabled:opacity-50"
-              >
-                {loading ? 'Signing in...' : 'Demo Login'}
-              </button>
-            </div>
-            <p className="text-xs text-blue-400/80">
-              Email: demo@pitchintel.ai<br />
-              Password: demo123
-            </p>
-          </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -180,10 +177,13 @@ export function Login() {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 pl-12 pr-12 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 pl-12 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Enter your password"
                   required
                   minLength={6}
+                  autoComplete="current-password"
+                  inputMode="text"
+                  spellCheck={false}
                 />
                 <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500" />
                 <button

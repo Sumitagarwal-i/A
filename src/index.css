@@ -19,3 +19,12 @@
 body {
   font-family: 'Inter', system-ui, sans-serif;
 }
+
+/* Hide browser password reveal icon for all browsers */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-input-decoration,
+input[type="password"]::-webkit-input-password-reveal-button {
+  display: none !important;
+}
