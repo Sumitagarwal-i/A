@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   FileText, 
@@ -16,7 +16,8 @@ import {
   Crown,
   MessageCircle,
   HelpCircle,
-  MessageSquare
+  MessageSquare,
+  LogIn
 } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { FeedbackModal } from './FeedbackModal'
@@ -24,11 +25,17 @@ import { useFeedback } from '../contexts/FeedbackContext'
 
 export function Navigation() {
   const location = useLocation()
+  const navigate = useNavigate()
   const { user, signOut } = useAuth()
   const { shouldShowFeedback, feedbackTrigger, hideFeedback } = useFeedback()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isProfileOpen, setIsProfileOpen] = useState(false)
   const [showFeedbackModal, setShowFeedbackModal] = useState(false)
+
+  const handleSignIn = () => {
+    // Navigate to login page to trigger the same login modal
+    navigate('/login')
+  }
 
   const navItems = [
     { path: '/app', label: 'Briefs', icon: FileText },
@@ -97,6 +104,19 @@ export function Navigation() {
 
           {/* Right Side Actions */}
           <div className="flex items-center gap-3">
+            {/* Sign In Button - Show for non-logged-in users */}
+            {!user && (
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleSignIn}
+                className="hidden sm:flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium transition-all duration-200 rounded-xl"
+              >
+                <LogIn className="w-4 h-4" />
+                Sign In
+              </motion.button>
+            )}
+
             {/* Feedback Button */}
             {user && (
               <motion.button
@@ -245,7 +265,7 @@ export function Navigation() {
                   )
                 })}
                 
-                {user && (
+                {user ? (
                   <>
                     <Link
                       to="/pricing"
@@ -265,6 +285,17 @@ export function Navigation() {
                       New Brief
                     </Link>
                   </>
+                ) : (
+                  <button
+                    onClick={() => {
+                      handleSignIn()
+                      setIsMobileMenuOpen(false)
+                    }}
+                    className="flex items-center gap-3 px-4 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-medium transition-all duration-200"
+                  >
+                    <LogIn className="w-5 h-5" />
+                    Sign In
+                  </button>
                 )}
               </div>
             </motion.div>

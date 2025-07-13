@@ -25,11 +25,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Landing />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/app" element={
-                <AuthGuard>
-                  <AppPage />
-                </AuthGuard>
-              } />
+              <Route path="/app" element={<AppPage />} />
               <Route path="/brief/:id" element={
                 <AuthGuard>
                   <BriefDetail />

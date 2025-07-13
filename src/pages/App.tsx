@@ -13,6 +13,7 @@ import { Brief, CreateBriefRequest, briefsService } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import { useFeedback } from '../contexts/FeedbackContext'
 import { exportToPDF, exportToCSV } from '../utils/exportUtils'
+import { UsageGuard } from '../components/UsageGuard'
 
 export function App() {
   const navigate = useNavigate()
@@ -29,9 +30,7 @@ export function App() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (user) {
-      loadBriefs()
-    }
+    loadBriefs()
     
     // Check if we should show the form immediately
     if (searchParams.get('new') === 'true') {
@@ -42,7 +41,11 @@ export function App() {
   const loadBriefs = async () => {
     try {
       setIsLoading(true)
-      const data = await briefsService.getAll(user?.id)
+      if (!user) {
+        setBriefs([]) // Guests have no saved briefs
+        return
+      }
+      const data = await briefsService.getAll(user.id)
       setBriefs(data)
     } catch (err) {
       console.error('Error loading briefs:', err)
@@ -192,7 +195,9 @@ export function App() {
                   </div>
                 </motion.div>
               )}
-              <BriefForm onSubmit={handleCreateBrief} isLoading={isLoading} />
+              <UsageGuard>
+                <BriefForm onSubmit={handleCreateBrief} isLoading={isLoading} />
+              </UsageGuard>
             </motion.div>
           ) : (
             <motion.div
@@ -218,6 +223,13 @@ export function App() {
                       : 'AI-powered insights for smarter B2B outreach'
                     }
                   </p>
+                  {!user && (
+                    <div className="mt-4 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                      <p className="text-blue-300 text-sm">
+                        💡 <strong>Guest Mode:</strong> You can create 1 free brief. Sign up to save your briefs and get unlimited access.
+                      </p>
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                   {briefs.length > 0 && (

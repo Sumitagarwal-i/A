@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { 
   TrendingUp, 
   Target, 
@@ -19,11 +19,21 @@ import {
   ChevronUp 
 } from 'lucide-react'
 import { Navigation } from '../components/Navigation'
+import { SignUpModal } from '../components/SignUpModal'
 
 export function Landing() {
+  const [searchParams] = useSearchParams()
   const [currentDemo, setCurrentDemo] = useState(0)
   const [isPlaying, setIsPlaying] = useState(true)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [showSignUpModal, setShowSignUpModal] = useState(false)
+
+  // Show sign-up modal if redirected due to usage limits
+  useEffect(() => {
+    if (searchParams.get('signup') === 'true') {
+      setShowSignUpModal(true)
+    }
+  }, [searchParams])
 
   const demoSteps = [
     {
@@ -774,6 +784,12 @@ export function Landing() {
           <div className="text-xs text-gray-600 mt-2 md:mt-0">&copy; {new Date().getFullYear()} PitchIntel. All rights reserved.</div>
         </div>
       </footer>
+
+      {/* Sign-up modal */}
+      <SignUpModal 
+        isOpen={showSignUpModal}
+        onClose={() => setShowSignUpModal(false)}
+      />
     </div>
   )
 }

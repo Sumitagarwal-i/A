@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Building2, Globe, Target, Loader2, Sparkles, User, ChevronDown, ChevronUp } from 'lucide-react'
+import { Building2, Globe, Target, User, ChevronDown, ChevronUp } from 'lucide-react'
 import { CompanyAutocomplete } from './CompanyAutocomplete'
+import { GenerateBriefButton } from './GenerateBriefButton'
 
 interface BriefFormProps {
   onSubmit: (data: { 
@@ -321,25 +322,10 @@ export function BriefForm({ onSubmit, isLoading }: BriefFormProps) {
             </div>
           </div>
 
-          <motion.button
-            type="submit"
-            disabled={isLoading}
-            whileHover={{ scale: isLoading ? 1 : 1.02 }}
-            whileTap={{ scale: isLoading ? 1 : 0.98 }}
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 text-lg shadow-2xl shadow-blue-500/25"
-          >
-            {isLoading ? (
-              <>
-                <Loader2 className="w-5 h-5 animate-spin" />
-                Analyzing Real-Time Data...
-              </>
-            ) : (
-              <>
-                <Sparkles className="w-5 h-5" />
-                Generate Intelligence Brief
-              </>
-            )}
-          </motion.button>
+          <GenerateBriefButton
+            onClick={handleSubmit}
+            isLoading={isLoading}
+          />
 
           {/* Data Sources Preview */}
           {/* <div className="bg-gray-800/30 rounded-xl p-4 border border-gray-700">
