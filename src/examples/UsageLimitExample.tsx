@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useUsageLimit } from '../hooks/useUsageLimit'
 import { GenerateBriefButton } from '../components/GenerateBriefButton'
@@ -81,14 +81,14 @@ export function UsageLimitExample() {
             <div>
               <p className="text-gray-400">Remaining Free Briefs:</p>
               <p className="text-white font-medium">
-                {getRemainingBriefs() === Infinity ? 'Unlimited' : getRemainingBriefs()}
+                {getRemainingBriefs === Infinity ? 'Unlimited' : getRemainingBriefs}
               </p>
             </div>
             
             <div>
               <p className="text-gray-400">Usage Percentage:</p>
               <p className="text-white font-medium">
-                {getUsagePercentage()}%
+                {getUsagePercentage}%
               </p>
             </div>
             
@@ -97,7 +97,7 @@ export function UsageLimitExample() {
                 <div>
                   <p className="text-gray-400">Days Until Reset:</p>
                   <p className="text-white font-medium">
-                    {getDaysUntilReset()} days
+                    {getDaysUntilReset} days
                   </p>
                 </div>
                 
@@ -120,7 +120,7 @@ export function UsageLimitExample() {
             <div className="mb-2 flex justify-between text-sm">
               <span className="text-gray-400">Free Briefs Used</span>
               <span className="text-white">
-                {maxFreeBriefs - getRemainingBriefs()} / {maxFreeBriefs}
+                {maxFreeBriefs - getRemainingBriefs} / {maxFreeBriefs}
               </span>
             </div>
             
@@ -128,13 +128,13 @@ export function UsageLimitExample() {
               <motion.div
                 className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full"
                 initial={{ width: 0 }}
-                animate={{ width: `${getUsagePercentage()}%` }}
+                animate={{ width: `${getUsagePercentage}%` }}
                 transition={{ duration: 0.5 }}
               />
             </div>
             
             <p className="text-gray-400 text-sm mt-2">
-              Resets in {getDaysUntilReset()} days
+              Resets in {getDaysUntilReset} days
             </p>
           </div>
         )}

@@ -74,8 +74,8 @@ export function BriefForm({ onSubmit, isLoading }: BriefFormProps) {
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = (e?: React.FormEvent) => {
+    e?.preventDefault()
     if (validateForm()) {
       onSubmit({
         companyName: formData.companyName.trim(),
@@ -323,7 +323,7 @@ export function BriefForm({ onSubmit, isLoading }: BriefFormProps) {
           </div>
 
           <GenerateBriefButton
-            onClick={handleSubmit}
+            onClick={() => handleSubmit()}
             isLoading={isLoading}
           />
 

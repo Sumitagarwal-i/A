@@ -66,8 +66,8 @@ export function GenerateBriefButton({
       {!isLoggedIn && (
         <div className="mt-3 text-center">
           <p className="text-gray-400 text-sm">
-            {getRemainingBriefs() > 0 
-              ? `${getRemainingBriefs()} free brief${getRemainingBriefs() === 1 ? '' : 's'} remaining`
+            {getRemainingBriefs > 0 
+              ? `${getRemainingBriefs} free brief${getRemainingBriefs === 1 ? '' : 's'} remaining`
               : 'Free briefs used up'
             }
           </p>
