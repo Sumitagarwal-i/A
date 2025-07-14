@@ -33,8 +33,8 @@ export function Navigation() {
   const [showFeedbackModal, setShowFeedbackModal] = useState(false)
 
   const handleSignIn = () => {
-    // Navigate to login page to trigger the same login modal
-    navigate('/login')
+    // Navigate to analytics page to trigger AuthGuard and working sign-in
+    navigate('/analytics')
   }
 
   const navItems = [

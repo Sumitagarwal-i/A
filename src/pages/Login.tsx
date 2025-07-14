@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Lock, Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
+import { supabase } from '../lib/auth'
+import { useLocation } from 'react-router-dom'
+import React from 'react'
 
 export function Login() {
   const { signIn, signUp, signInWithGoogle } = useAuth()
@@ -13,6 +16,17 @@ export function Login() {
   const [error, setError] = useState('')
   const [showConfirmation, setShowConfirmation] = useState(false)
 
+  const location = useLocation()
+
+  // Reset form state on mount or when location changes
+  React.useEffect(() => {
+    setEmail('')
+    setPassword('')
+    setError('')
+    setIsSignUp(false)
+    setShowConfirmation(false)
+  }, [location.key])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -22,17 +36,34 @@ export function Login() {
       if (isSignUp) {
         const { error } = await signUp(email, password)
         if (error) {
-          setError(error.message)
+          setError(error.message || 'Sign up failed. Please try again.')
         } else {
           setShowConfirmation(true)
         }
       } else {
-        const { error } = await signIn(email, password)
-        if (error) {
-          setError(error.message)
+        const result = await signIn(email, password)
+        console.log('signIn result:', result)
+        if (result && result.error) {
+          setError(result.error.message || 'Sign in failed. Please try again.')
+        } else if (!result || typeof result !== 'object') {
+          setError('Sign in failed. No response from server.')
+        } else {
+          // Wait a moment, then log user and session
+          setTimeout(async () => {
+            try {
+              // Log a message to remind the dev to check the user value in React DevTools
+              console.log('Check the user value in React DevTools > AuthContext after sign-in.')
+              // Log Supabase session directly
+              const session = await supabase.auth.getSession()
+              console.log('Supabase session:', session)
+            } catch (e) {
+              // Ignore
+            }
+          }, 1000)
         }
       }
     } catch (err) {
+      console.error('Unexpected error during sign in:', err)
       setError('An unexpected error occurred')
     } finally {
       setLoading(false)
