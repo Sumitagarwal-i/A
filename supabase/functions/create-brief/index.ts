@@ -75,8 +75,6 @@ Deno.serve(async (req) => {
       )
     }
 
-    console.log(`Creating context-aware brief for ${companyName}...`)
-
     // 1. Extract domain and setup Clearbit
     let companyDomain = ''
     let companyLogo = ''
@@ -86,7 +84,7 @@ Deno.serve(async (req) => {
         companyDomain = url.hostname.replace('www.', '')
         companyLogo = `https://logo.clearbit.com/${companyDomain}`
       } catch (e) {
-        console.log('Failed to extract domain from website:', e)
+        // console.log('Failed to extract domain from website:', e)
       }
     }
 
@@ -143,14 +141,14 @@ Deno.serve(async (req) => {
       .single()
 
     if (error) {
-      console.error('Database error:', error)
+      // console.error('Database error:', error)
       return new Response(
         JSON.stringify({ error: 'Failed to save brief to database', details: error.message }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
 
-    console.log(`Successfully created context-aware brief for ${companyName}`)
+    // console.log(`Successfully created context-aware brief for ${companyName}`)
 
     return new Response(
       JSON.stringify({ 
@@ -161,7 +159,7 @@ Deno.serve(async (req) => {
     )
 
   } catch (error) {
-    console.error('Error creating brief:', error)
+    // console.error('Error creating brief:', error)
     return new Response(
       JSON.stringify({ error: 'Internal server error', details: error.message }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -174,7 +172,7 @@ async function fetchNewsData(companyName: string): Promise<NewsItem[]> {
   try {
     const apiKey = Deno.env.get('NEWSDATA_API_KEY')
     if (!apiKey) {
-      console.log('NewsData API key not found, using mock data')
+      // console.log('NewsData API key not found, using mock data')
       return generateMockNews(companyName)
     }
 
@@ -200,7 +198,7 @@ async function fetchNewsData(companyName: string): Promise<NewsItem[]> {
       return uniqueNews
     }
   } catch (error) {
-    console.error('Error fetching news data:', error)
+    // console.error('Error fetching news data:', error)
   }
 
   return generateMockNews(companyName)
@@ -210,7 +208,7 @@ async function fetchJobSignals(companyName: string): Promise<JobSignal[]> {
   try {
     const apiKey = Deno.env.get('JSEARCH_API_KEY')
     if (!apiKey) {
-      console.log('JSearch API key not found, using mock data')
+      // console.log('JSearch API key not found, using mock data')
       return generateMockJobs(companyName)
     }
 
@@ -234,7 +232,7 @@ async function fetchJobSignals(companyName: string): Promise<JobSignal[]> {
       }))
     }
   } catch (error) {
-    console.error('Error fetching job signals:', error)
+    // console.error('Error fetching job signals:', error)
   }
 
   return generateMockJobs(companyName)
@@ -244,7 +242,7 @@ async function analyzeTone(userIntent: string, newsData: NewsItem[]): Promise<To
   try {
     const apiKey = Deno.env.get('TWINWORD_API_KEY')
     if (!apiKey) {
-      console.log('Twinword API key not found, using mock data')
+      // console.log('Twinword API key not found, using mock data')
       return generateMockTone()
     }
 
@@ -273,7 +271,7 @@ async function analyzeTone(userIntent: string, newsData: NewsItem[]): Promise<To
       }
     }
   } catch (error) {
-    console.error('Error analyzing tone:', error)
+    // console.error('Error analyzing tone:', error)
   }
 
   return generateMockTone()

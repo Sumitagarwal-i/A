@@ -7,7 +7,6 @@ export const performanceUtils = {
       const lcpObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         const lastEntry = entries[entries.length - 1];
-        console.log('LCP:', lastEntry.startTime);
         
         // Send to analytics if needed
         if (lastEntry.startTime > 2500) {
@@ -22,7 +21,6 @@ export const performanceUtils = {
         entries.forEach((entry) => {
           if ('processingStart' in entry) {
             // @ts-ignore
-            console.log('FID:', entry.processingStart - entry.startTime);
           }
         });
       });
@@ -37,7 +35,6 @@ export const performanceUtils = {
             clsValue += entry.value;
           }
         });
-        console.log('CLS:', clsValue);
       });
       clsObserver.observe({ entryTypes: ['layout-shift'] });
     }

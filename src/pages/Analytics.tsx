@@ -9,9 +9,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { exportToPDF, exportToCSV } from '../utils/exportUtils'
 
 export function Analytics() {
-  console.log('Analytics page loaded')
   const { user } = useAuth()
-  console.log('Analytics user:', user)
   const [briefs, setBriefs] = useState<Brief[]>([])
   const [loading, setLoading] = useState(true)
   const [timeFilter, setTimeFilter] = useState('all')

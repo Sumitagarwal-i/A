@@ -24,7 +24,6 @@ export function Settings() {
     }
     
     // Here you would typically save to backend/localStorage
-    console.log(`Setting ${setting} changed to:`, value)
   }
 
   const ToggleSwitch = ({ enabled, onChange }: { enabled: boolean; onChange: (value: boolean) => void }) => (

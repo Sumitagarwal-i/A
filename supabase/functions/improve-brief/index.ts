@@ -31,8 +31,6 @@ Deno.serve(async (req) => {
       )
     }
 
-    console.log(`Improving brief ${briefId}...`)
-
     // Get the existing brief
     let query = supabaseClient
       .from('briefs')
@@ -81,8 +79,6 @@ Deno.serve(async (req) => {
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
-
-    console.log(`Successfully improved brief ${briefId}`)
 
     return new Response(
       JSON.stringify({ 

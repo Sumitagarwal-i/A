@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Lock, Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
@@ -19,7 +19,7 @@ export function Login() {
   const location = useLocation()
 
   // Reset form state on mount or when location changes
-  React.useEffect(() => {
+  useEffect(() => {
     setEmail('')
     setPassword('')
     setError('')
@@ -31,46 +31,49 @@ export function Login() {
     e.preventDefault()
     setLoading(true)
     setError('')
+    setShowConfirmation(false)
 
     try {
       if (isSignUp) {
-        const { error } = await signUp(email, password)
+        // 1. Check if user exists via RPC
+        const { data: exists, error: rpcError } = await supabase.rpc('user_exists', { email })
+        if (rpcError) {
+          setError('Error checking email. Please try again.')
+          setShowConfirmation(false)
+          return
+        }
+        if (exists) {
+          setError('This email is already registered. Please sign in instead.')
+          setShowConfirmation(false)
+          return
+        }
+        // 2. Proceed with sign up
+        const { data, error } = await signUp(email, password)
         if (error) {
           setError(error.message || 'Sign up failed. Please try again.')
-        } else {
+          setShowConfirmation(false)
+        } else if (data && data.user) {
           setShowConfirmation(true)
+        } else {
+          setError('Sign up failed. Please try again.')
+          setShowConfirmation(false)
         }
       } else {
+        // Sign in flow
         const result = await signIn(email, password)
-        console.log('signIn result:', result)
-        if (result && result.error) {
+        if (result?.error) {
           setError(result.error.message || 'Sign in failed. Please try again.')
-        } else if (!result || typeof result !== 'object') {
-          setError('Sign in failed. No response from server.')
         } else {
-          // Wait a moment, then log user and session
-          setTimeout(async () => {
-            try {
-              // Log a message to remind the dev to check the user value in React DevTools
-              console.log('Check the user value in React DevTools > AuthContext after sign-in.')
-              // Log Supabase session directly
-              const session = await supabase.auth.getSession()
-              console.log('Supabase session:', session)
-            } catch (e) {
-              // Ignore
-            }
-          }, 1000)
         }
       }
     } catch (err) {
-      console.error('Unexpected error during sign in:', err)
       setError('An unexpected error occurred')
     } finally {
       setLoading(false)
     }
   }
 
-  if (showConfirmation) {
+  if (showConfirmation && !error) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center px-4">
         <motion.div
@@ -87,15 +90,15 @@ export function Login() {
             >
               <CheckCircle className="w-8 h-8 text-white" />
             </motion.div>
-            
+
             <h1 className="text-2xl font-bold text-white mb-4">
               Check Your Email
             </h1>
-            
+
             <p className="text-gray-400 mb-6">
               Confirmation email sent. Please check your inbox to verify your account and complete the registration process.
             </p>
-            
+
             <button
               onClick={() => {
                 setShowConfirmation(false)
@@ -123,7 +126,6 @@ export function Login() {
         <div className="bg-gray-900 border border-gray-800 rounded-2xl p-8">
           {/* Header */}
           <div className="text-center mb-8">
-            {/* Removed PitchIntel logo and name */}
             <h1 className="text-2xl font-bold text-white mb-2">
               {isSignUp ? 'Create your account' : 'Sign in to your account'}
             </h1>
@@ -138,7 +140,7 @@ export function Login() {
               try {
                 const { error } = await signInWithGoogle()
                 if (error) setError(error.message)
-              } catch (err) {
+              } catch {
                 setError("Google sign in failed. Please try again.")
               } finally {
                 setLoading(false)
@@ -147,7 +149,6 @@ export function Login() {
             className="w-full flex items-center justify-center gap-2 bg-white text-gray-900 font-semibold py-3 px-6 rounded-lg shadow hover:bg-gray-100 transition-colors mb-6 border border-gray-300"
             disabled={loading}
           >
-            {/* Official Google Logo */}
             <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" className="w-5 h-5" />
             Continue with Google
           </button>
@@ -196,9 +197,6 @@ export function Login() {
                   placeholder="Enter your password"
                   required
                   minLength={6}
-                  autoComplete="current-password"
-                  inputMode="text"
-                  spellCheck={false}
                 />
                 <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500" />
                 <button
