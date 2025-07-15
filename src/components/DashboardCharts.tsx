@@ -1,3 +1,4 @@
+import React, { useMemo } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, AreaChart, Area } from 'recharts'
 import { motion } from 'framer-motion'
 import { TrendingUp, Users, Newspaper, Code, Building2, AlertCircle } from 'lucide-react'
@@ -27,19 +28,19 @@ export function DashboardCharts({ briefs }: DashboardChartsProps) {
     )
   }
 
-  // Prepare data for charts based on actual brief data
-  const briefsOverTime = briefs.reduce((acc, brief) => {
+  // Memoize all expensive calculations
+  const briefsOverTime = useMemo(() => briefs.reduce((acc, brief) => {
     const date = new Date(brief.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
     acc[date] = (acc[date] || 0) + 1
     return acc
-  }, {} as Record<string, number>)
+  }, {} as Record<string, number>), [briefs])
 
-  const timeData = Object.entries(briefsOverTime).map(([date, count]) => ({
+  const timeData = useMemo(() => Object.entries(briefsOverTime).map(([date, count]) => ({
     date,
     briefs: count
-  })).slice(-7) // Last 7 days
+  })).slice(-7), [briefsOverTime]) // Last 7 days
 
-  const signalDistribution = briefs.reduce((acc, brief) => {
+  const signalDistribution = useMemo(() => briefs.reduce((acc, brief) => {
     const tag = brief.signalTag || 'Unknown'
     const category = tag.toLowerCase().includes('hiring') ? 'Hiring' :
                     tag.toLowerCase().includes('funding') ? 'Funding' :
@@ -47,28 +48,27 @@ export function DashboardCharts({ briefs }: DashboardChartsProps) {
                     tag.toLowerCase().includes('launch') ? 'Product' : 'Other'
     acc[category] = (acc[category] || 0) + 1
     return acc
-  }, {} as Record<string, number>)
+  }, {} as Record<string, number>), [briefs])
 
-  const signalData = Object.entries(signalDistribution).map(([name, value]) => ({
+  const signalData = useMemo(() => Object.entries(signalDistribution).map(([name, value]) => ({
     name,
     value,
     color: name === 'Hiring' ? '#10b981' :
            name === 'Funding' ? '#3b82f6' :
            name === 'Growth' ? '#8b5cf6' :
            name === 'Product' ? '#f59e0b' : '#6b7280'
-  }))
+  })), [signalDistribution])
 
-  const techStackData = briefs.reduce((acc, brief) => {
+  const techStackData = useMemo(() => briefs.reduce((acc, brief) => {
     if (brief.techStack && brief.techStack.length > 0) {
       brief.techStack.forEach(tech => {
         acc[tech] = (acc[tech] || 0) + 1
       })
     }
     return acc
-  }, {} as Record<string, number>)
+  }, {} as Record<string, number>), [briefs])
 
-  // Enhanced tech data with realistic technologies
-  const enhancedTechData = {
+  const enhancedTechData = useMemo(() => ({
     'React': 8,
     'Node.js': 7,
     'TypeScript': 6,
@@ -80,28 +80,26 @@ export function DashboardCharts({ briefs }: DashboardChartsProps) {
     'Kubernetes': 2,
     'MongoDB': 2,
     ...techStackData
-  }
+  }), [techStackData])
 
-  // Limit to top 6 technologies for clarity
-  const topTech = Object.entries(enhancedTechData)
+  const topTech = useMemo(() => Object.entries(enhancedTechData)
     .sort(([,a], [,b]) => b - a)
     .slice(0, 6)
-    .map(([name, count]) => ({ name, count }))
+    .map(([name, count]) => ({ name, count })), [enhancedTechData])
 
-  // Performance Insights
-  const totalTechStacks = briefs.reduce((sum, brief) => sum + (brief.techStack?.length || 0), 0)
-  const avgTechStackDepth = briefs.length ? (totalTechStacks / briefs.length).toFixed(1) : '0'
-  const briefsWithGrowth = briefs.filter(b => (b.signalTag || '').toLowerCase().includes('growth')).length
-  const percentGrowth = briefs.length ? Math.round((briefsWithGrowth / briefs.length) * 100) : 0
-  const briefsWithReact = briefs.filter(b => b.techStack && b.techStack.includes('React')).length
-  const percentReact = briefs.length ? Math.round((briefsWithReact / briefs.length) * 100) : 0
+  const totalTechStacks = useMemo(() => briefs.reduce((sum, brief) => sum + (brief.techStack?.length || 0), 0), [briefs])
+  const avgTechStackDepth = useMemo(() => briefs.length ? (totalTechStacks / briefs.length).toFixed(1) : '0', [totalTechStacks, briefs.length])
+  const briefsWithGrowth = useMemo(() => briefs.filter(b => (b.signalTag || '').toLowerCase().includes('growth')).length, [briefs])
+  const percentGrowth = useMemo(() => briefs.length ? Math.round((briefsWithGrowth / briefs.length) * 100) : 0, [briefsWithGrowth, briefs.length])
+  const briefsWithReact = useMemo(() => briefs.filter(b => b.techStack && b.techStack.includes('React')).length, [briefs])
+  const percentReact = useMemo(() => briefs.length ? Math.round((briefsWithReact / briefs.length) * 100) : 0, [briefsWithReact, briefs.length])
 
-  const totalStats = {
+  const totalStats = useMemo(() => ({
     totalBriefs: briefs.length,
     totalNews: briefs.reduce((sum, brief) => sum + (brief.news?.length || 0), 0),
     totalJobs: briefs.reduce((sum, brief) => sum + (brief.jobSignals?.length || 0), 0),
     totalTech: Object.keys(enhancedTechData).length
-  }
+  }), [briefs, enhancedTechData])
 
   return (
     <div className="space-y-8">

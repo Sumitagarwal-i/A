@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { 
   Building2, 
@@ -23,7 +23,7 @@ interface BriefCardProps {
   onDelete?: (id: string) => void
 }
 
-export function BriefCard({ brief, onDelete }: BriefCardProps) {
+const BriefCardComponent = ({ brief, onDelete }: BriefCardProps) => {
   const [copiedField, setCopiedField] = useState<string | null>(null)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -334,3 +334,5 @@ export function BriefCard({ brief, onDelete }: BriefCardProps) {
     </motion.div>
   )
 }
+
+export const BriefCard = React.memo(BriefCardComponent)

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { BarChart3, Filter, Download } from 'lucide-react'
 import { Brief, briefsService } from '../lib/supabase'
@@ -32,7 +32,7 @@ export function Analytics() {
     }
   }
 
-  const filteredBriefs = briefs.filter(brief => {
+  const filteredBriefs = useMemo(() => briefs.filter(brief => {
     if (timeFilter === 'all') return true
     
     const briefDate = new Date(brief.createdAt)
@@ -45,7 +45,7 @@ export function Analytics() {
       case 'quarter': return diffDays <= 90
       default: return true
     }
-  })
+  }), [briefs, timeFilter])
 
   const handleExport = (format: 'pdf' | 'csv') => {
     if (filteredBriefs.length === 0) return
