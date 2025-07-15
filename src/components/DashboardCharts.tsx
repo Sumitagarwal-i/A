@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import  { useMemo } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, AreaChart, Area } from 'recharts'
 import { motion } from 'framer-motion'
 import { TrendingUp, Users, Newspaper, Code, Building2, AlertCircle } from 'lucide-react'

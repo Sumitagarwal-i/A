@@ -26,31 +26,31 @@ function App() {
         <FeedbackProvider>
           <Router>
             <Suspense fallback={<LoadingSpinner />}>
-              <Routes>
-                <Route path="/" element={<Landing />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/app" element={<AppPage />} />
-                <Route path="/brief/:id" element={
-                  <AuthGuard>
-                    <BriefDetail />
-                  </AuthGuard>
-                } />
-                <Route path="/analytics" element={
-                  <AuthGuard>
-                    <Analytics />
-                  </AuthGuard>
-                } />
-                <Route path="/settings" element={
-                  <AuthGuard>
-                    <Settings />
-                  </AuthGuard>
-                } />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/help" element={<Help />} />
-                <Route path="/pricing" element={<Pricing />} />
-                <Route path="/docs" element={<Docs />} />
-                <Route path="/updates" element={<Updates />} />
-              </Routes>
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/app" element={<AppPage />} />
+              <Route path="/brief/:id" element={
+                <AuthGuard>
+                  <BriefDetail />
+                </AuthGuard>
+              } />
+              <Route path="/analytics" element={
+                <AuthGuard>
+                  <Analytics />
+                </AuthGuard>
+              } />
+              <Route path="/settings" element={
+                <AuthGuard>
+                  <Settings />
+                </AuthGuard>
+              } />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/help" element={<Help />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/docs" element={<Docs />} />
+              <Route path="/updates" element={<Updates />} />
+            </Routes>
             </Suspense>
           </Router>
         </FeedbackProvider>

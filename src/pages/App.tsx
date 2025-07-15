@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Plus, History, ArrowLeft, Sparkles, Download } from 'lucide-react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
