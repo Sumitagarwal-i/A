@@ -15,8 +15,6 @@ import {
   ChevronDown,
   Heart,
   Zap,
-  Building2,
-  Calendar,
   Shield,
   TrendingUp
 } from 'lucide-react'
