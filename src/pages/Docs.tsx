@@ -174,7 +174,7 @@ export function Docs() {
             <BookOpen className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-4xl font-bold text-white mb-4">
-            IntelliBrief Documentation
+            PitchIntel Documentation
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
             Everything you need to know to master AI-powered B2B intelligence and strategic outreach.

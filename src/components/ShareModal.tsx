@@ -198,7 +198,7 @@ ${brief.toneInsights?.sentiment ? `📈 Market Sentiment: ${brief.toneInsights.s
             </div>
 
             {/* Company Info */}
-            <div className="mb-6 p-4 bg-gray-800/50 rounded-xl">
+            <div className="mb-6 p-4 bg-gray-800/50 rounded-lg">
               <h4 className="font-semibold text-white">{brief.companyName}</h4>
               <p className="text-sm text-gray-400">Strategic Intelligence Brief</p>
             </div>
@@ -208,7 +208,7 @@ ${brief.toneInsights?.sentiment ? `📈 Market Sentiment: ${brief.toneInsights.s
               {/* Copy Link */}
               <button
                 onClick={handleCopyLink}
-                className="w-full flex items-center gap-3 p-4 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 hover:border-blue-500/30 rounded-xl transition-all duration-200 text-left"
+                className="w-full flex items-center gap-3 p-4 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 hover:border-blue-500/30 rounded-lg transition-all duration-200 text-left"
               >
                 <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
                   {copiedLink ? (
@@ -231,7 +231,7 @@ ${brief.toneInsights?.sentiment ? `📈 Market Sentiment: ${brief.toneInsights.s
               <button
                 onClick={handleExportPDF}
                 disabled={isGeneratingPDF}
-                className="w-full flex items-center gap-3 p-4 bg-green-500/10 hover:bg-green-500/20 border border-green-500/20 hover:border-green-500/30 rounded-xl transition-all duration-200 text-left disabled:opacity-50"
+                className="w-full flex items-center gap-3 p-4 bg-green-500/10 hover:bg-green-500/20 border border-green-500/20 hover:border-green-500/30 rounded-lg transition-all duration-200 text-left disabled:opacity-50"
               >
                 <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
                   {isGeneratingPDF ? (
@@ -254,7 +254,7 @@ ${brief.toneInsights?.sentiment ? `📈 Market Sentiment: ${brief.toneInsights.s
               <button
                 onClick={handleLinkedInPost}
                 disabled={isGeneratingLinkedIn}
-                className="w-full flex items-center gap-3 p-4 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/20 hover:border-purple-500/30 rounded-xl transition-all duration-200 text-left disabled:opacity-50"
+                className="w-full flex items-center gap-3 p-4 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/20 hover:border-purple-500/30 rounded-lg transition-all duration-200 text-left disabled:opacity-50"
               >
                 <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
                   {isGeneratingLinkedIn ? (

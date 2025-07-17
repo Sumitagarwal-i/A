@@ -100,12 +100,12 @@ export function LoadingStepIndicator({ steps, currentProgress }: LoadingStepIndi
           <motion.div
             className="bg-gradient-to-r from-primary-500 to-violet-500 h-2 rounded-full"
             initial={{ width: 0 }}
-            animate={{ width: `${currentProgress}%` }}
+            animate={{ width: `${Math.min(currentProgress, 100)}%` }}
             transition={{ duration: 0.5, ease: "easeOut" }}
           />
         </div>
         <p className="text-gray-500 text-xs mt-2 text-center">
-          {Math.round(currentProgress)}% complete
+          {Math.round(Math.min(currentProgress, 100))}% complete
         </p>
       </div>
     </div>

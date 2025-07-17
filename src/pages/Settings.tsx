@@ -166,9 +166,9 @@ export function Settings() {
                   Your data is used to generate personalized briefs and improve our AI models. 
                   We never share your data with third parties without consent.
                 </p>
-                <div className="text-xs text-gray-500">
+                {/* <div className="text-xs text-gray-500">
                   <strong>Data Sources:</strong> NewsData.io, JSearch API, BuiltWith API, Clearbit
-                </div>
+                </div> */}
               </div>
               
               <button className="flex items-center gap-3 w-full p-4 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 rounded-lg transition-colors text-left">
@@ -182,7 +182,7 @@ export function Settings() {
           </motion.div>
 
           {/* API Usage Section */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
@@ -207,7 +207,7 @@ export function Settings() {
                 <div className="text-sm text-gray-400">Tech Stacks</div>
               </div>
             </div>
-          </motion.div>
+          </motion.div> */}
         </div>
       </div>
     </div>

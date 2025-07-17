@@ -146,7 +146,7 @@ export function BriefDetail() {
           
           <button
             onClick={() => setShowShareModal(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl transition-colors font-medium w-fit"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors font-medium w-fit"
           >
             <Share2 className="w-4 h-4" />
             Share

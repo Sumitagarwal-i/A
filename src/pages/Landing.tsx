@@ -20,6 +20,7 @@ import {
 } from 'lucide-react'
 import { Navigation } from '../components/Navigation'
 import { SignUpModal } from '../components/SignUpModal'
+import { FeedbackLikeModal } from '../components/FeedbackLikeModal'
 
 export function Landing() {
   const [searchParams] = useSearchParams()
@@ -27,6 +28,7 @@ export function Landing() {
   const [isPlaying, setIsPlaying] = useState(true)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [showSignUpModal, setShowSignUpModal] = useState(false)
+  // Remove showLikeModal state
 
   // Show sign-up modal if redirected due to usage limits
   useEffect(() => {
@@ -310,15 +312,15 @@ export function Landing() {
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <Link
                   to="/app"
-                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-blue-600 hover:bg-blue-500 rounded-xl font-semibold text-lg transition-all duration-200 shadow-xl hover:shadow-blue-500/25 hover:scale-105"
+                  className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-blue-600 hover:bg-blue-500 rounded-lg font-semibold text-lg transition-all duration-200 shadow-xl hover:shadow-blue-500/25 hover:scale-105"
                 >
                   Reveal Intel
                 </Link>
                 
-                <button className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-gray-600 text-gray-300 hover:text-white rounded-xl font-semibold text-lg transition-all duration-200">
+                {/* <button className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-gray-600 text-gray-300 hover:text-white rounded-lg font-semibold text-lg transition-all duration-200">
                   <Play className="w-5 h-5" />
                   Watch Demo
-                </button>
+                </button> */}
               </div>
 
               {/* Real-time Data Sources */}
@@ -406,6 +408,11 @@ export function Landing() {
               </p>
             </div>
           </motion.div>
+        </div>
+
+        {/* Inline Feedback Like Section */}
+        <div className="flex justify-center mb-20">
+          <FeedbackLikeModal />
         </div>
 
         {/* Audience Section */}
@@ -755,12 +762,12 @@ export function Landing() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/app"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-500 rounded-xl font-semibold text-lg transition-all duration-200 hover:scale-105"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-500 rounded-lg font-semibold text-lg transition-all duration-200 hover:scale-105"
             >
               <Zap className="w-5 h-5" />
               Start Free Now
             </Link>
-            <button className="inline-flex items-center gap-2 px-8 py-4 bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-gray-600 text-gray-300 hover:text-white rounded-xl font-semibold text-lg transition-all duration-200">
+            <button className="inline-flex items-center gap-2 px-8 py-4 bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-gray-600 text-gray-300 hover:text-white rounded-lg font-semibold text-lg transition-all duration-200">
               <Play className="w-5 h-5" />
               Watch Demo
             </button>

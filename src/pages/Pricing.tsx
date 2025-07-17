@@ -90,7 +90,7 @@ export function Pricing() {
     <div className="min-h-screen bg-black text-white">
       <Navigation />
       
-      <div className="pt-24 container mx-auto px-4 py-8 sm:py-16">
+      <div className="pt-24 container mx-auto px-4 py-8 sm:py-16 mt-20">
         {/* 30-Day Free Access Banner */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -223,7 +223,7 @@ export function Pricing() {
                 </div>
 
                 <button
-                  className={`w-full py-3 px-6 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 relative group text-sm sm:text-base ${
+                  className={`w-full py-3 px-6 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2 relative group text-sm sm:text-base ${
                     plan.popular
                       ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-lg hover:shadow-blue-500/25'
                       : 'bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700 hover:border-gray-600'
@@ -374,14 +374,14 @@ export function Pricing() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/app"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-500 rounded-xl font-semibold text-lg transition-all duration-200 hover:scale-105"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-500 rounded-lg font-semibold text-lg transition-all duration-200 hover:scale-105"
             >
               <Zap className="w-5 h-5" />
               Start Free Trial
             </Link>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-gray-600 text-gray-300 hover:text-white rounded-xl font-semibold text-lg transition-all duration-200"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-gray-600 text-gray-300 hover:text-white rounded-lg font-semibold text-lg transition-all duration-200"
             >
               <Users className="w-5 h-5" />
               Contact Sales

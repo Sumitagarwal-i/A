@@ -88,6 +88,13 @@ export type CreateBriefRequest = {
   }
 }
 
+export type Feedback = {
+  id?: string
+  type: 'like' | 'dislike'
+  page?: string
+  created_at?: string
+}
+
 // Database operations with user isolation
 export const briefsService = {
   async getAll(userId?: string): Promise<Brief[]> {
@@ -183,6 +190,16 @@ export const briefsService = {
 
     const { error } = await query
 
+    if (error) throw error
+  }
+}
+
+// Feedback service for like/dislike modal
+export const feedbackService = {
+  async create(type: Feedback['type'], page: string = 'landing'): Promise<void> {
+    const { error } = await supabase
+      .from('feedback')
+      .insert({ type, page })
     if (error) throw error
   }
 }

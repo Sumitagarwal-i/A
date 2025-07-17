@@ -26,6 +26,7 @@ import { HiringChart } from './HiringChart'
 import { TechStackGrid } from './TechStackGrid'
 import { ToneAnalysis } from './ToneAnalysis'
 import { IntelligenceSources } from './IntelligenceSources'
+import ReactMarkdown from 'react-markdown';
 
 interface BriefTabsProps {
   brief: Brief
@@ -223,7 +224,7 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case 'summary':
+      case 'summary': {
         return (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -232,73 +233,106 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
           >
             <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-2xl p-8">
               <div className="flex items-center gap-3 mb-6">
-
                 <Brain className="w-6 h-6 text-blue-400" />
-                <h3 className="text-xl font-semibold text-white" title="High-level, AI-generated overview of the company’s position and signals.">AI-Generated Strategic Summary</h3>
-
+                <h3
+                  className="text-xl font-semibold text-white"
+                  title="High-level, AI-generated overview of the company’s position and signals."
+                >
+                  AI-Generated Strategic Summary
+                </h3>
+      
                 <Zap className="w-6 h-6 text-blue-400" />
-                <h3 className="text-2xl font-semibold text-white">🚀 Strategic Opportunity: {brief.companyName}</h3>
+                <h3 className="text-2xl font-semibold text-white">
+                   Strategic Opportunity: {brief.companyName}
+                </h3>
               </div>
-              
+      
               <div className="prose prose-invert max-w-none space-y-6">
+                {/* ✅ Actual Groq-crafted narrative */}
                 <p className="text-gray-300 leading-relaxed text-lg">
-                  {brief.companyName} presents a compelling strategic opportunity for your {insights.userContext.userProduct}. 
-                  With {insights.sentiment} market sentiment and {insights.emotion} emotional positioning, they're showing {insights.hasPositiveNews ? 'strong growth momentum' : 'stable operations'} 
-                  {insights.isScaling && ` with aggressive hiring across ${insights.jobsCount} roles`}. 
-                  Their current market position creates an ideal window for strategic partnership.
+                  {brief.summary}
                 </p>
-
+      
+                {/* Signals block */}
                 <div className="bg-gray-800/30 rounded-xl p-6">
                   <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                     <TrendingUp className="w-5 h-5 text-green-400" />
-                     Key Signals
+                    Key Signals
                   </h4>
                   <ul className="space-y-3">
                     <li className="flex items-start gap-3">
                       <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0" />
                       <span className="text-gray-300">
-                        <strong>{insights.newsCount} recent news mentions</strong> - {insights.sentiment} sentiment indicates {insights.hasPositiveNews ? 'growth momentum perfect for your ' + insights.userContext.userProduct : 'stable operations ready for efficiency solutions'}
+                        <strong>{insights.newsCount} recent news mentions</strong> —{' '}
+                        {insights.sentiment} sentiment indicates{' '}
+                        {insights.hasPositiveNews
+                          ? `growth momentum perfect for your ${insights.userContext.userProduct}`
+                          : 'stable operations ready for efficiency solutions'}
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0" />
                       <span className="text-gray-300">
-                        <strong>{insights.jobsCount} active hiring roles</strong> - {insights.isScaling ? 'Aggressive scaling creates immediate need for ' + insights.userContext.userValue : 'Selective growth indicates focus on high-impact solutions like yours'}
+                        <strong>{insights.jobsCount} active hiring roles</strong> —{' '}
+                        {insights.isScaling
+                          ? `Aggressive scaling creates immediate need for ${insights.userContext.userValue}`
+                          : 'Selective growth indicates focus on high-impact solutions like yours'}
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0" />
                       <span className="text-gray-300">
-                        <strong>{insights.techCount} technologies detected</strong> -{insights.isAIFocused ? 'AI/ML focus aligns with modern ' + insights.userContext.userIndustry + ' solutions' : 'Traditional stack suggests opportunity for ' + insights.userContext.userProduct + ' integration'}
+                        <strong>{insights.techCount} technologies detected</strong> —{' '}
+                        {insights.isAIFocused
+                          ? `AI/ML focus aligns with modern ${insights.userContext.userIndustry} solutions`
+                          : `Traditional stack suggests opportunity for ${insights.userContext.userProduct} integration`}
                       </span>
                     </li>
-
                   </ul>
                 </div>
-
+      
+                {/* Priorities block */}
                 <div className="bg-gray-800/30 rounded-xl p-6">
                   <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                     <Brain className="w-5 h-5 text-purple-400" />
-                     Inferred Priorities
+                    Inferred Priorities
                   </h4>
                   <p className="text-gray-300 leading-relaxed">
-                    Based on their hiring patterns and technology signals, {brief.companyName} is prioritizing {insights.isScaling ? 'rapid scaling operations' : 'operational optimization'}.
-                    {insights.isAIFocused && ' Their AI/ML technology adoption suggests innovation-driven growth that aligns with modern ' + insights.userContext.userIndustry + ' solutions.'}
-                    {insights.topRoles.length > 0 && ` Heavy investment in ${insights.topRoles.join(' and ')} teams creates immediate opportunities for ${insights.userContext.userProduct} to deliver ${insights.userContext.userValue}.`}
+                    Based on their hiring patterns and technology signals,{' '}
+                    {brief.companyName} is prioritizing{' '}
+                    {insights.isScaling
+                      ? 'rapid scaling operations'
+                      : 'operational optimization'}
+                    .
+                    {insights.isAIFocused &&
+                      ` Their AI/ML technology adoption suggests innovation-driven growth aligned with modern ${insights.userContext.userIndustry} solutions.`}
+                    {insights.topRoles.length > 0 &&
+                      ` Heavy investment in ${insights.topRoles.join(
+                        ' and '
+                      )} teams creates immediate opportunities for ${
+                        insights.userContext.userProduct
+                      } to deliver ${insights.userContext.userValue}.`}
                   </p>
                 </div>
-
+      
+                {/* Angle block */}
                 <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-xl p-6">
                   <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                     <Target className="w-5 h-5 text-green-400" />
-                     Strategic Angle for Your {insights.userContext.userProduct}
+                    Strategic Angle for Your {insights.userContext.userProduct}
                   </h4>
                   <p className="text-gray-300 leading-relaxed">
-                    The convergence of their {insights.sentiment} market position, {insights.emotion} emotional state, and {insights.isScaling ? 'scaling' : 'optimization'} phase creates perfect timing for your {insights.userContext.userProduct}. 
-                    Their current trajectory shows clear need for solutions that deliver {insights.userContext.userValue}, making this an ideal strategic partnership opportunity.
+                    The convergence of their {insights.sentiment} market position,{' '}
+                    {insights.emotion} emotional state, and{' '}
+                    {insights.isScaling ? 'scaling' : 'optimization'} phase creates
+                    perfect timing for your {insights.userContext.userProduct}. Their
+                    current trajectory shows clear need for solutions that deliver{' '}
+                    {insights.userContext.userValue}, making this an ideal strategic
+                    partnership opportunity.
                   </p>
                 </div>
-
+      
+                {/* Tags */}
                 <div className="flex flex-wrap gap-3">
                   <span className="bg-blue-500/20 text-blue-300 px-4 py-2 rounded-full text-sm font-medium border border-blue-500/30">
                     {insights.isScaling ? 'Scaling Operations' : 'Optimizing Efficiency'}
@@ -309,7 +343,9 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
                     </span>
                   )}
                   <span className="bg-green-500/20 text-green-300 px-4 py-2 rounded-full text-sm font-medium border border-green-500/30">
-                    {insights.sentiment.charAt(0).toUpperCase() + insights.sentiment.slice(1)} Market Sentiment
+                    {insights.sentiment.charAt(0).toUpperCase() +
+                      insights.sentiment.slice(1)}{' '}
+                    Market Sentiment
                   </span>
                   <span className="bg-orange-500/20 text-orange-300 px-4 py-2 rounded-full text-sm font-medium border border-orange-500/30">
                     {insights.userContext.userIndustry} Opportunity
@@ -318,267 +354,218 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
               </div>
             </div>
           </motion.div>
-        )
+        );
+      }
 
-      case 'pitch':
-        return (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="space-y-6"
-          >
-            <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-2xl p-8">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <Target className="w-6 h-6 text-purple-400" />
-                  <h3 className="text-2xl font-semibold text-white">🎯 Pitch Strategy for Your {insights.userContext.userProduct}</h3>
+
+        case "pitch": {
+          return (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="space-y-6"
+            >
+              <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-2xl p-8">
+                {/* --- Header + Copy --- */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <Target className="w-6 h-6 text-purple-400" />
+                    <h3 className="text-2xl font-semibold text-white">
+                      Pitch Strategy for {brief.companyName}
+                    </h3>
+                  </div>
+                  <button
+                    onClick={() => copyToClipboard(brief.pitchAngle, "pitch")}
+                    className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-all duration-200 font-medium shadow-lg hover:shadow-purple-500/25"
+                  >
+                    {copiedField === "pitch" ? (
+                      <>
+                        <CheckCircle className="w-4 h-4" /> Copied!
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-4 h-4" /> Copy Strategy
+                      </>
+                    )}
+                  </button>
                 </div>
-                <button
-                  onClick={() => copyToClipboard(brief.pitchAngle, 'pitch')}
-                  className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-xl transition-all duration-200 font-medium shadow-lg hover:shadow-purple-500/25"
-                >
-                  {copiedField === 'pitch' ? (
-                    <><CheckCircle className="w-4 h-4" /> Copied!</>
-                  ) : (
-                    <><Copy className="w-4 h-4" /> Copy Strategy</>
-                  )}
-                </button>
-              </div>
-
-              <div className="space-y-6">
-                <div className="bg-gray-800/30 rounded-xl p-6">
-                  <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                    <Zap className="w-5 h-5 text-yellow-400" />
-                     Positioning Angle
-                  </h4>
-                  <p className="text-gray-300 leading-relaxed">
-                    Your {insights.userContext.userProduct} fits perfectly with {brief.companyName}'s {insights.sentiment} market position and {insights.isScaling ? 'aggressive scaling needs' : 'operational optimization goals'}. 
-                    Their {insights.emotion} emotional state and {insights.jobsCount} active hiring roles create immediate receptiveness to solutions that deliver {insights.userContext.userValue}.
-                  </p>
+        
+                {/* --- ✅ Groq Raw PitchAngle --- */}
+                <div className="prose prose-invert max-w-none">
+                  <ReactMarkdown>{brief.pitchAngle}</ReactMarkdown>
                 </div>
-
-                <div className="bg-gray-800/30 rounded-xl p-6">
-                  <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                    <Brain className="w-5 h-5 text-blue-400" />
-                     Primary Hook
-                  </h4>
-                  <p className="text-gray-300 leading-relaxed">
-                    "{brief.companyName}'s {insights.isScaling ? 'rapid expansion' : 'strategic growth'} across {insights.topRoles.join(', ')} teams creates the perfect opportunity for your {insights.userContext.userProduct} to deliver immediate impact. 
-                    With {insights.newsCount} recent developments showing {insights.sentiment} momentum, they need solutions that scale with their ambitions while ensuring {insights.userContext.userValue}."
-                  </p>
-                </div>
-
-                <div className="bg-gray-800/30 rounded-xl p-6">
-                  <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                    <AlertTriangle className="w-5 h-5 text-red-400" />
-                     Pain Points Your {insights.userContext.userProduct} Solves
-                  </h4>
-                  <ul className="space-y-3">
-                    {insights.isScaling && (
-                      <li className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-red-400 rounded-full mt-2 flex-shrink-0" />
-                        <span className="text-gray-300">
-                          <strong>Scaling complexity:</strong> {insights.jobsCount} new hires need streamlined processes that your {insights.userContext.userProduct} provides
+        
+                {/* --- ✅ Extra Custom Contextual Insights --- */}
+                <div className="space-y-6 mt-8">
+                  <div className="bg-gray-800/30 rounded-xl p-6">
+                    <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                      <Zap className="w-5 h-5 text-yellow-400" />
+                      Real-Time Signals
+                    </h4>
+                    <p className="text-gray-300 leading-relaxed">
+                      {brief.companyName} shows {insights.jobsCount}+ active roles,
+                      {insights.newsCount} recent news stories, and a{' '}
+                      {insights.sentiment} sentiment trend.
+                    </p>
+                  </div>
+        
+                  <div className="bg-gray-800/30 rounded-xl p-6">
+                    <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                      <Users className="w-5 h-5 text-green-400" />
+                      Target Buyer Personas
+                    </h4>
+                    <div className="flex flex-wrap gap-3">
+                      {insights.topRoles.map((role) => (
+                        <span
+                          key={role}
+                          className="inline-block bg-green-500/10 border border-green-500/20 rounded-full px-4 py-2 text-green-300 text-sm"
+                        >
+                          {role}
                         </span>
-                      </li>
-                    )}
-                    {insights.isAIFocused && (
-                      <li className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-red-400 rounded-full mt-2 flex-shrink-0" />
-                        <span className="text-gray-300">
-                          <strong>AI/ML infrastructure gaps:</strong> Their innovation initiatives need robust {insights.userContext.userIndustry} solutions
-                        </span>
-                      </li>
-                    )}
-                    <li className="flex items-start gap-3">
-                      <div className="w-2 h-2 bg-red-400 rounded-full mt-2 flex-shrink-0" />
-                      <span className="text-gray-300">
-                        <strong>Cross-functional alignment:</strong> {insights.topRoles.length > 0 ? `${insights.topRoles.join(' and ')} teams need better coordination` : 'Growing teams need unified visibility'} that your platform delivers
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="bg-gray-800/30 rounded-xl p-6">
-                  <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                    <Users className="w-5 h-5 text-green-400" />
-                    👤 Ideal Buyer Personas at {brief.companyName}
-                  </h4>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {insights.topRoles.includes('Engineering') && (
-                      <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
-                        <div className="font-medium text-blue-300">VP of Engineering</div>
-                        <div className="text-sm text-gray-400">Needs {insights.userContext.userValue} for scaling tech operations</div>
-                      </div>
-                    )}
-                    {insights.topRoles.includes('Product') && (
-                      <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
-                        <div className="font-medium text-green-300">Head of Product</div>
-                        <div className="text-sm text-gray-400">Requires visibility into {insights.userContext.userIndustry} metrics</div>
-                      </div>
-                    )}
-                    {insights.topRoles.includes('Sales') && (
-                      <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
-                        <div className="font-medium text-purple-300">VP of Sales</div>
-                        <div className="text-sm text-gray-400">Scaling revenue operations with your solution</div>
-                      </div>
-                    )}
-                    {insights.topRoles.includes('Operations') && (
-                      <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
-                        <div className="font-medium text-orange-300">Chief Operating Officer</div>
-                        <div className="text-sm text-gray-400">Optimizing {insights.userContext.userValue} across teams</div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="bg-gray-800/30 rounded-xl p-6">
-                  <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                    <Building2 className="w-5 h-5 text-purple-400" />
-                     Messaging Themes for Your {insights.userContext.userIndustry} Solution
-                  </h4>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4 text-center">
-                      <div className="font-medium text-purple-300">Operational Visibility</div>
-                    </div>
-                    <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4 text-center">
-                      <div className="font-medium text-blue-300">{insights.isScaling ? 'Scaling Efficiency' : 'Process Optimization'}</div>
-                    </div>
-                    <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4 text-center">
-                      <div className="font-medium text-green-300">Strategic {insights.userContext.userValue}</div>
+                      ))}
                     </div>
                   </div>
-                </div>
-
-                <div className="bg-gray-800/30 rounded-xl p-6">
-                  <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                    <Shield className="w-5 h-5 text-yellow-400" />
-                     Objections to Anticipate
-                  </h4>
-                  <div className="space-y-4">
-                    <div className="border-l-4 border-yellow-500/30 pl-4">
-                      <div className="text-yellow-300 font-medium">"We're already using existing {insights.userContext.userIndustry} tools"</div>
-                      <div className="text-gray-400 text-sm mt-1">→ "Our {insights.userContext.userProduct} integrates with your existing stack to provide unified {insights.userContext.userValue} visibility"</div>
-                    </div>
-                    <div className="border-l-4 border-yellow-500/30 pl-4">
-                      <div className="text-yellow-300 font-medium">"Not the right time for new initiatives"</div>
-                      <div className="text-gray-400 text-sm mt-1">→ "Actually, your {insights.isScaling ? 'scaling phase with ' + insights.jobsCount + ' new hires' : 'optimization focus'} makes this the perfect time for {insights.userContext.userValue}"</div>
-                    </div>
+        
+                  <div className="bg-gray-800/30 rounded-xl p-6">
+                    <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                      <Brain className="w-5 h-5 text-blue-400" />
+                      Suggested CTA
+                    </h4>
+                    <p className="text-gray-300 leading-relaxed">
+                      Consider sending a quick async audit offer or proposing a{' '}
+                      {insights.isScaling
+                        ? 'scaling-focused'
+                        : 'process-optimization'}{' '}
+                      call to tie directly to their priorities.
+                    </p>
                   </div>
-                </div>
-
-                <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-xl p-6">
-                  <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-green-400" />
-                     Suggested CTA
-                  </h4>
-                  <p className="text-gray-300 leading-relaxed">
-                    "Happy to share a 5-minute async audit on your {insights.isScaling ? 'scaling' : 'operational'} signals and how companies like {brief.companyName} typically optimize {insights.userContext.userValue} with our {insights.userContext.userProduct}."
-                  </p>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        )
+            </motion.div>
+          )
+        };
+        
 
-      case 'subject':
-        return (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="space-y-6"
-          >
-            <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-2xl p-8">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <Mail className="w-6 h-6 text-green-400" />
-                  <h3 className="text-2xl font-semibold text-white">Strategic Subject Lines for Your {insights.userContext.userProduct}</h3>
+        case 'subject': {
+          return (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="space-y-6"
+            >
+              <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-2xl p-8">
+                {/* Header & Copy Button */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <Mail className="w-6 h-6 text-green-400" />
+                    <h3 className="text-2xl font-semibold text-white">
+                      ✉️ Strategic Subject Line for {brief.companyName}
+                    </h3>
+                  </div>
+                  <button
+                    onClick={() => copyToClipboard(brief.subjectLine, 'subject')}
+                    className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-500 text-white rounded-lg transition-colors font-medium"
+                  >
+                    {copiedField === 'subject' ? (
+                      <>
+                        <CheckCircle className="w-4 h-4" /> Copied!
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-4 h-4" /> Copy Subject
+                      </>
+                    )}
+                  </button>
                 </div>
-                <button
-                  onClick={() => copyToClipboard(brief.subjectLine, 'subject')}
-                  className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-500 text-white rounded-xl transition-colors font-medium"
-                >
-                  {copiedField === 'subject' ? (
-                    <><CheckCircle className="w-4 h-4" /> Copied!</>
-                  ) : (
-                    <><Copy className="w-4 h-4" /> Copy Subject</>
-                  )}
-                </button>
-              </div>
-              
-              <div className="space-y-6">
+        
+                {/* Primary subject line */}
                 <div className="text-center">
                   <div className="inline-block bg-green-500/20 border border-green-500/30 rounded-xl px-8 py-6 mb-6">
                     <p className="text-green-300 font-semibold text-xl">"{brief.subjectLine}"</p>
                   </div>
                 </div>
-
+        
+                {/* Alternatives + Guidelines */}
                 <div className="grid md:grid-cols-2 gap-6">
+                  {/* Alternatives */}
                   <div className="bg-gray-800/30 rounded-xl p-6">
-                    <h4 className="text-lg font-semibold text-white mb-4">Contextual Alternatives for Your {insights.userContext.userIndustry} Solution</h4>
+                    <h4 className="text-lg font-semibold text-white mb-4">
+                      ✅ Alternative Angles
+                    </h4>
                     <div className="space-y-3">
                       <div className="bg-gray-700/50 rounded-lg p-4">
-                        <div className="text-green-300 font-medium">{insights.userContext.userProduct} for {brief.companyName}'s {insights.isScaling ? 'Scaling' : 'Growth'}</div>
-                        <div className="text-xs text-gray-400 mt-1">Direct, solution-focused approach</div>
+                        <div className="text-green-300 font-medium">
+                          {insights.userContext.userProduct} for {brief.companyName}'s {insights.isScaling ? 'Scaling' : 'Growth'}
+                        </div>
+                        <div className="text-xs text-gray-400 mt-1">Solution-focused</div>
                       </div>
                       <div className="bg-gray-700/50 rounded-lg p-4">
-                        <div className="text-green-300 font-medium">Accelerating {insights.userContext.userValue} at {brief.companyName}</div>
-                        <div className="text-xs text-gray-400 mt-1">Value-focused positioning</div>
+                        <div className="text-green-300 font-medium">
+                          Accelerating {insights.userContext.userValue} at {brief.companyName}
+                        </div>
+                        <div className="text-xs text-gray-400 mt-1">Value-driven</div>
                       </div>
                       {insights.hasPositiveNews && (
                         <div className="bg-gray-700/50 rounded-lg p-4">
-                          <div className="text-green-300 font-medium">{brief.companyName} Growth + {insights.userContext.userIndustry} Partnership</div>
-                          <div className="text-xs text-gray-400 mt-1">Timely, momentum-based</div>
+                          <div className="text-green-300 font-medium">
+                            {brief.companyName} Growth + {insights.userContext.userIndustry} Partnership
+                          </div>
+                          <div className="text-xs text-gray-400 mt-1">Momentum-based</div>
                         </div>
                       )}
                       <div className="bg-gray-700/50 rounded-lg p-4">
-                        <div className="text-green-300 font-medium">{insights.userContext.userValue} Strategy for {brief.companyName}</div>
-                        <div className="text-xs text-gray-400 mt-1">Strategic, consultative tone</div>
+                        <div className="text-green-300 font-medium">
+                          {insights.userContext.userValue} Strategy for {brief.companyName}
+                        </div>
+                        <div className="text-xs text-gray-400 mt-1">Strategic tone</div>
                       </div>
                     </div>
                   </div>
-
+        
+                  {/* Best Practices */}
                   <div className="bg-gray-800/30 rounded-xl p-6">
-                    <h4 className="text-lg font-semibold text-white mb-4">Subject Line Guidelines for {insights.userContext.userIndustry}</h4>
+                    <h4 className="text-lg font-semibold text-white mb-4">
+                      🧩 Subject Line Best Practices
+                    </h4>
                     <ul className="space-y-3 text-sm">
                       <li className="flex items-start gap-3">
                         <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-300">≤60 characters for mobile optimization</span>
+                        <span className="text-gray-300">Keep under 60 characters for mobile</span>
                       </li>
                       <li className="flex items-start gap-3">
                         <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-300">Include {brief.companyName} for personalization</span>
+                        <span className="text-gray-300">Mention {brief.companyName} for personalization</span>
                       </li>
                       <li className="flex items-start gap-3">
                         <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-300">Reference your {insights.userContext.userProduct} value</span>
+                        <span className="text-gray-300">Include {insights.userContext.userProduct} value</span>
                       </li>
                       <li className="flex items-start gap-3">
                         <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-300">Align with their {insights.sentiment} market sentiment</span>
+                        <span className="text-gray-300">Align with {insights.sentiment} market sentiment</span>
                       </li>
                       <li className="flex items-start gap-3">
                         <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-300">No generic sales language or excessive punctuation</span>
+                        <span className="text-gray-300">Avoid generic hype or spammy punctuation</span>
                       </li>
                     </ul>
                   </div>
                 </div>
-
+        
+                {/* Timing Context */}
                 <div className="bg-gray-800/30 rounded-xl p-6">
-                  <h4 className="text-lg font-semibold text-white mb-4">Context-Aware Timing</h4>
+                  <h4 className="text-lg font-semibold text-white mb-4">📅 Context & Timing</h4>
                   <p className="text-gray-300 leading-relaxed">
-                    Given {brief.companyName}'s {insights.sentiment} sentiment and {insights.isScaling ? 'active scaling with ' + insights.jobsCount + ' open roles' : 'strategic growth phase'}, 
-                    your subject line should emphasize {insights.hasPositiveNews ? 'momentum and partnership' : 'strategic value and efficiency'}. 
-                    Their {insights.emotion} emotional state suggests they're {insights.emotion === 'joy' || insights.emotion === 'trust' ? 'receptive to growth-focused messaging' : 'focused on stability and proven solutions'}.
+                    Given {brief.companyName}'s {insights.sentiment} sentiment and {insights.isScaling ? `${insights.jobsCount} open roles` : 'steady growth phase'}, tailor your subject line for {insights.hasPositiveNews ? 'momentum and partnership' : 'clear strategic value'}. Their {insights.emotion} mood indicates they’re {['joy', 'trust'].includes(insights.emotion) ? 'open to bold, growth-focused outreach' : 'more receptive to steady, proven outcomes'}.
                   </p>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        )
+            </motion.div>
+          );
+        };
+        
 
-      case 'warnings':
+      case 'warnings': {
         return (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -701,11 +688,12 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
                   </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        )
+              </div>
+            </motion.div>
+          )
+      }
 
-      case 'news':
+      case 'news': {
         return (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -735,8 +723,9 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
             )}
           </motion.div>
         )
+      }
 
-      case 'hiring':
+      case 'hiring': {
         return (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -755,8 +744,9 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
             <HiringChart jobSignals={brief.jobSignals || []} />
           </motion.div>
         )
+      }
 
-      case 'tech':
+      case 'tech': {
         return (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -775,8 +765,9 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
             <TechStackGrid techStack={brief.techStackData || []} />
           </motion.div>
         )
+      }
 
-      case 'tone':
+      case 'tone': {
         return (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -790,8 +781,9 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
             <ToneAnalysis toneInsights={brief.toneInsights} />
           </motion.div>
         )
+      }
 
-      case 'sources':
+      case 'sources': {
         return (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -805,9 +797,11 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
             <IntelligenceSources sources={brief.intelligenceSources} />
           </motion.div>
         )
+      }
 
-      default:
-        return null
+      default: {
+        return null;
+      }
     }
   }
 
@@ -819,7 +813,7 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
         <div className="lg:hidden">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="w-full flex items-center justify-between px-4 py-3 bg-gray-800 rounded-xl text-white font-medium"
+            className="w-full flex items-center justify-between px-4 py-3 bg-gray-800 rounded-lg text-white font-medium"
           >
             <span>{tabs.find(tab => tab.id === activeTab)?.label}</span>
             <ChevronDown className={`w-4 h-4 transition-transform ${isMobileMenuOpen ? 'rotate-180' : ''}`} />
@@ -831,7 +825,7 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="mt-2 space-y-1 bg-gray-800 rounded-xl p-2"
+                className="mt-2 space-y-1 bg-gray-800 rounded-lg p-2"
               >
                 {tabs.map((tab) => {
                   const Icon = tab.icon
@@ -875,7 +869,7 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
               <button
                 key={tab.id}
                 onClick={() => handleTabChange(tab.id)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 text-left ${
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 text-left ${
                   isActive 
                     ? `${getTabColor(tab.color, true)} border` 
                     : getTabColor(tab.color, false)
@@ -922,7 +916,7 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
                 <button
                   key={tab.id}
                   onClick={() => handleTabChange(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-3 rounded-t-xl font-medium transition-all duration-200 border-b-2 ${
+                  className={`flex items-center gap-2 px-4 py-3 rounded-lg font-medium transition-all duration-200 border-b-2 ${
                     isActive 
                       ? `${getTabColor(tab.color, true)} border-current` 
                       : `${getTabColor(tab.color, false)} border-transparent hover:border-gray-600`
