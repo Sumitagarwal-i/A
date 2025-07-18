@@ -231,15 +231,15 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
           >
             <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-2xl p-8">
               <div className="flex items-center gap-3 mb-6">
-                <Brain className="w-6 h-6 text-blue-400" />
+                {/* <Brain className="w-6 h-6 text-blue-400" />
                 <h3
                   className="text-xl font-semibold text-white"
                   title="High-level, AI-generated overview of the company’s position and signals."
                 >
                   AI-Generated Strategic Summary
-                </h3>
+                </h3> */}
       
-                <Zap className="w-6 h-6 text-blue-400" />
+                {/* <Zap className="w-6 h-6 text-blue-400" /> */}
                 <h3 className="text-2xl font-semibold text-white">
                    Strategic Opportunity: {brief.companyName}
                 </h3>
@@ -457,7 +457,7 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
                   <div className="flex items-center gap-3">
                     <Mail className="w-6 h-6 text-green-400" />
                     <h3 className="text-2xl font-semibold text-white">
-                      ✉️ Strategic Subject Line for {brief.companyName}
+                      Strategic Subject Line for {brief.companyName}
                     </h3>
                   </div>
                   <button
