@@ -30,6 +30,7 @@ export type Brief = {
   newsTrends?: string
   userId?: string
   toneInsights?: ToneInsights
+  outreachCopy?: string
 }
 
 export type NewsItem = {

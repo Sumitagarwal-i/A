@@ -263,7 +263,7 @@ const BriefCardComponent = ({ brief, onDelete }: BriefCardProps) => {
             {copiedField === 'pitch' ? (
               <><CheckCircle className="w-4 h-4" /> Copied Pitch!</>
             ) : (
-              <><Copy className="w-4 h-4" /> Copy Pitch</>
+              <><Copy className="w-4 h-4" /> Copy Pitch Strategy Directly </>
             )}
           </button>
           <Link

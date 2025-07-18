@@ -16,7 +16,8 @@ import {
   Heart,
   Zap,
   Shield,
-  TrendingUp
+  TrendingUp,
+  MessageSquare
 } from 'lucide-react'
 import { Brief } from '../lib/supabase'
 import { NewsCard } from './NewsCard'
@@ -24,7 +25,9 @@ import { HiringChart } from './HiringChart'
 import { TechStackGrid } from './TechStackGrid'
 import { ToneAnalysis } from './ToneAnalysis'
 import { IntelligenceSources } from './IntelligenceSources'
-import ReactMarkdown from 'react-markdown';
+// import ReactMarkdown from 'react-markdown';
+
+
 
 interface BriefTabsProps {
   brief: Brief
@@ -165,6 +168,12 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
       color: 'green'
     },
     {
+      id: 'outreach',
+      label: 'Cold Outreach',
+      icon: MessageSquare,
+      color: 'indigo'
+    },
+    {
       id: 'warnings',
       label: 'What NOT to Pitch',
       icon: AlertTriangle,
@@ -210,6 +219,7 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
       blue: isActive ? 'bg-blue-500/20 text-blue-300 border-blue-500/30' : 'text-gray-400 hover:text-blue-300 hover:bg-blue-500/10',
       purple: isActive ? 'bg-purple-500/20 text-purple-300 border-purple-500/30' : 'text-gray-400 hover:text-purple-300 hover:bg-purple-500/10',
       green: isActive ? 'bg-green-500/20 text-green-300 border-green-500/30' : 'text-gray-400 hover:text-green-300 hover:bg-green-500/10',
+      indigo: isActive ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30' : 'text-gray-400 hover:text-indigo-300 hover:bg-indigo-500/10',
       red: isActive ? 'bg-red-500/20 text-red-300 border-red-500/30' : 'text-gray-400 hover:text-red-300 hover:bg-red-500/10',
       emerald: isActive ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' : 'text-gray-400 hover:text-emerald-300 hover:bg-emerald-500/10',
       violet: isActive ? 'bg-violet-500/20 text-violet-300 border-violet-500/30' : 'text-gray-400 hover:text-violet-300 hover:bg-violet-500/10',
@@ -356,92 +366,132 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
       }
 
 
-        case "pitch": {
-          return (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="space-y-6"
-            >
-              <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-2xl p-8">
-                {/* --- Header + Copy --- */}
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-3">
-                    <Target className="w-6 h-6 text-purple-400" />
-                    <h3 className="text-2xl font-semibold text-white">
-                      Pitch Strategy for {brief.companyName}
-                    </h3>
-                  </div>
-                  <button
-                    onClick={() => copyToClipboard(brief.pitchAngle, "pitch")}
-                    className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-all duration-200 font-medium shadow-lg hover:shadow-purple-500/25"
-                  >
-                    {copiedField === "pitch" ? (
-                      <>
-                        <CheckCircle className="w-4 h-4" /> Copied!
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-4 h-4" /> Copy Strategy
-                      </>
-                    )}
-                  </button>
+      case "pitch": {
+        const pitch = JSON.parse(brief.pitchAngle);
+
+      
+        return (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-6"
+          >
+            <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-2xl p-8">
+      
+              {/* --- Header --- */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <Target className="w-6 h-6 text-purple-400" />
+                  <h3 className="text-2xl font-semibold text-white">
+                    Pitch Strategy for {brief.companyName}
+                  </h3>
                 </div>
-        
-                {/* --- ✅ Groq Raw PitchAngle --- */}
-                <div className="prose prose-invert max-w-none">
-                  <ReactMarkdown>{brief.pitchAngle}</ReactMarkdown>
-                </div>
-        
-                {/* --- ✅ Extra Custom Contextual Insights --- */}
-                <div className="space-y-6 mt-8">
-                  <div className="bg-gray-800/30 rounded-xl p-6">
-                    <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                      <Zap className="w-5 h-5 text-yellow-400" />
-                      Real-Time Signals
-                    </h4>
-                    <p className="text-gray-300 leading-relaxed">
-                      {brief.companyName} shows {insights.jobsCount}+ active roles,
-                      {insights.newsCount} recent news stories, and a{' '}
-                      {insights.sentiment} sentiment trend.
-                    </p>
-                  </div>
-        
-                  <div className="bg-gray-800/30 rounded-xl p-6">
-                    <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                      <Users className="w-5 h-5 text-green-400" />
-                      Target Buyer Personas
-                    </h4>
-                    <div className="flex flex-wrap gap-3">
-                      {insights.topRoles.map((role) => (
-                        <span
-                          key={role}
-                          className="inline-block bg-green-500/10 border border-green-500/20 rounded-full px-4 py-2 text-green-300 text-sm"
-                        >
-                          {role}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-        
-                  <div className="bg-gray-800/30 rounded-xl p-6">
-                    <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                      <Brain className="w-5 h-5 text-blue-400" />
-                      Suggested CTA
-                    </h4>
-                    <p className="text-gray-300 leading-relaxed">
-                      Consider sending a quick async audit offer or proposing a{' '}
-                      {insights.isScaling
-                        ? 'scaling-focused'
-                        : 'process-optimization'}{' '}
-                      call to tie directly to their priorities.
-                    </p>
-                  </div>
-                </div>
+                <button
+                  onClick={() => copyToClipboard(JSON.stringify(pitch, null, 2), "pitch")}
+                  className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-all duration-200 font-medium shadow-lg hover:shadow-purple-500/25"
+                >
+                  {copiedField === "pitch" ? (
+                    <>
+                      <CheckCircle className="w-4 h-4" /> Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" /> Copy JSON
+                    </>
+                  )}
+                </button>
               </div>
-            </motion.div>
-          )
-        };
+      
+              {/* --- Positioning Angle --- */}
+              <div className="bg-gray-800/30 rounded-xl p-6 mb-4">
+                <h4 className="text-lg font-semibold text-purple-300 mb-2 flex items-center gap-2">
+                  <Target className="w-5 h-5" />
+                  Positioning Angle
+                </h4>
+                <p className="text-gray-300">{pitch.positioningAngle}</p>
+              </div>
+      
+              {/* --- Primary Hook --- */}
+              <div className="bg-gray-800/30 rounded-xl p-6 mb-4">
+                <h4 className="text-lg font-semibold text-purple-300 mb-2 flex items-center gap-2">
+                  <Zap className="w-5 h-5" />
+                  Primary Hook
+                </h4>
+                <p className="text-gray-300">{pitch.primaryHook}</p>
+              </div>
+      
+              {/* --- Key Pain Points --- */}
+              <div className="bg-gray-800/30 rounded-xl p-6 mb-4">
+                <h4 className="text-lg font-semibold text-purple-300 mb-2 flex items-center gap-2">
+                  <AlertTriangle className="w-5 h-5" />
+                  Key Pain Points
+                </h4>
+                <ul className="list-disc pl-6 text-gray-300 space-y-1">
+                  {pitch.keyPainPoints.map((pt: string) => (
+                    <li key={pt}>{pt}</li>
+                  ))}
+                </ul>
+              </div>
+      
+              {/* --- Buyer Personas --- */}
+              <div className="bg-gray-800/30 rounded-xl p-6 mb-4">
+                <h4 className="text-lg font-semibold text-purple-300 mb-2 flex items-center gap-2">
+                  <Users className="w-5 h-5" />
+                  Buyer Personas
+                </h4>
+                <ul className="list-disc pl-6 text-gray-300 space-y-1">
+                  {pitch.buyerPersonas.map((persona: string) => (
+                    <li key={persona}>{persona}</li>
+                  ))}
+                </ul>
+              </div>
+      
+              {/* --- Messaging Themes --- */}
+              <div className="bg-gray-800/30 rounded-xl p-6 mb-4">
+                <h4 className="text-lg font-semibold text-purple-300 mb-2 flex items-center gap-2">
+                  {/* <Sparkles className="w-5 h-5" /> */}
+                  Messaging Themes
+                </h4>
+                <ul className="list-disc pl-6 text-gray-300 space-y-1">
+                  {pitch.messagingThemes.map((theme: string) => (
+                    <li key={theme}>{theme}</li>
+                  ))}
+                </ul>
+              </div>
+      
+              {/* --- Likely Objections --- */}
+              <div className="bg-gray-800/30 rounded-xl p-6 mb-4">
+                <h4 className="text-lg font-semibold text-purple-300 mb-2 flex items-center gap-2">
+                  <AlertTriangle className="w-5 h-5" />
+                  Likely Objections + Smart Rebuttals
+                </h4>
+                <ul className="space-y-4">
+                  {pitch.likelyObjections.map((item: { objection: string; rebuttal: string }, idx: number) => (
+                    <li key={idx} className="text-gray-300">
+                      <p className="font-semibold">Objection:</p>
+                      <p className="mb-1">"{item.objection}"</p>
+                      <p className="font-semibold">Rebuttal:</p>
+                      <p>"{item.rebuttal}"</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+      
+              {/* --- CTA --- */}
+              <div className="bg-gray-800/30 rounded-xl p-6">
+                <h4 className="text-lg font-semibold text-purple-300 mb-2 flex items-center gap-2">
+                  <Mail className="w-5 h-5" />
+                  Recommended CTA
+                </h4>
+                <p className="text-gray-300">{pitch.recommendedCTA}</p>
+              </div>
+      
+            </div>
+          </motion.div>
+        );
+      }
+      
+      
         
 
         case 'subject': {
@@ -561,6 +611,117 @@ export function BriefTabs({ brief, layout = 'horizontal', activeTab: externalAct
             </motion.div>
           );
         };
+        
+
+        case 'outreach': {
+          let parsedOutreach = null;
+          if (brief.outreachCopy) {
+            try {
+              parsedOutreach = JSON.parse(brief.outreachCopy);
+            } catch (e) {
+              console.error('Invalid outreach JSON:', e);
+            }
+          }
+          if (!parsedOutreach) {
+            return (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="space-y-6"
+              >
+                <div className="bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 rounded-2xl p-8">
+                  <div className="text-gray-400 text-center py-8">
+                    Outreach content not available or broken.
+                  </div>
+                </div>
+              </motion.div>
+            );
+          }
+          const { coldEmail, linkedinHooks, ctas } = parsedOutreach as {
+            coldEmail: string;
+            linkedinHooks: string[];
+            ctas: { primary: string; secondary: string };
+          };
+          return (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="space-y-6"
+            >
+              <div className="bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 rounded-2xl p-8">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <MessageSquare className="w-6 h-6 text-indigo-400" />
+                    <h3 className="text-2xl font-semibold text-white">
+                      Cold Outreach Copy for {brief.companyName}
+                    </h3>
+                  </div>
+                </div>
+                <div className="space-y-6">
+                  {/* Cold Email */}
+                  <div className="bg-gray-900/50 border border-gray-700 rounded-xl p-6">
+                    <h4 className="text-lg font-semibold text-white mb-2">
+                      📧 Cold Email
+                    </h4>
+                    <p className="text-gray-300 whitespace-pre-line">{coldEmail}</p>
+                    <button
+                      onClick={() => copyToClipboard(coldEmail, 'cold-email')}
+                      className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm"
+                    >
+                      <Copy className="w-4 h-4" /> Copy Email
+                    </button>
+                  </div>
+                  {/* LinkedIn Hooks */}
+                  <div className="bg-gray-900/50 border border-gray-700 rounded-xl p-6">
+                    <h4 className="text-lg font-semibold text-white mb-2">
+                      🔗 LinkedIn Hooks
+                    </h4>
+                    <ul className="space-y-2">
+                      {linkedinHooks.map((hook: string, idx: number) => (
+                        <li
+                          key={idx}
+                          className="text-gray-300 bg-gray-800/50 p-3 rounded-md"
+                        >
+                          {hook}
+                        </li>
+                      ))}
+                    </ul>
+                    <button
+                      onClick={() =>
+                        copyToClipboard(linkedinHooks.join('\n'), 'linkedin-hooks')
+                      }
+                      className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm"
+                    >
+                      <Copy className="w-4 h-4" /> Copy Hooks
+                    </button>
+                  </div>
+                  {/* Suggested CTAs */}
+                  <div className="bg-gray-900/50 border border-gray-700 rounded-xl p-6">
+                    <h4 className="text-lg font-semibold text-white mb-2">
+                      🎯 Suggested CTAs
+                    </h4>
+                    <p className="text-gray-300 mb-2">
+                      <strong>Primary CTA:</strong> {ctas.primary}
+                    </p>
+                    <p className="text-gray-300">
+                      <strong>Secondary CTA:</strong> {ctas.secondary}
+                    </p>
+                    <button
+                      onClick={() =>
+                        copyToClipboard(`${ctas.primary}\n${ctas.secondary}`, 'ctas')
+                      }
+                      className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm"
+                    >
+                      <Copy className="w-4 h-4" /> Copy CTAs
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          );
+        }
+        
         
 
       case 'warnings': {
