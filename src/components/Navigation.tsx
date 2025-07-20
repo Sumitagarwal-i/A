@@ -1,3 +1,4 @@
+
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -40,6 +41,7 @@ export function Navigation() {
   const navItems = [
     { path: '/app', label: 'Briefs', icon: FileText },
     { path: '/analytics', label: 'Analytics', icon: BarChart3 },
+    { path: '/outreach', label: 'Outreach', icon: MessageCircle },
     { path: '/pricing', label: 'Pricing', icon: DollarSign },
     { path: '/docs', label: 'Docs', icon: BookOpen }
   ]
@@ -136,9 +138,7 @@ export function Navigation() {
             {user && (
               <Link
                 to="/pricing"
-                className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#7B61FF] to-[#5A4BFF] hover:from-[#6F5AFF] hover:to-[#4739E6]
-
- text-white rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-purple-500/25"
+                className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#7B61FF] to-[#5A4BFF] hover:from-[#6F5AFF] hover:to-[#4739E6] text-white rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-purple-500/25"
               >
                 <Crown className="w-4 h-4" />
                 
@@ -272,8 +272,7 @@ export function Navigation() {
                     <Link
                       to="/pricing"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-[#7B61FF] to-[#3C2A99] hover:from-[#6B54E6] hover:to-[#2D217A]
- text-white rounded-lg font-medium transition-all duration-200"
+                      className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-[#7B61FF] to-[#3C2A99] hover:from-[#6B54E6] hover:to-[#2D217A] text-white rounded-lg font-medium transition-all duration-200"
                     >
                       <Crown className="w-5 h-5" />
                       Upgrade Plan

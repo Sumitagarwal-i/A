@@ -1,3 +1,4 @@
+
 import React, { Suspense } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
@@ -11,6 +12,7 @@ const Login = React.lazy(() => import('./pages/Login').then(m => ({ default: m.L
 const AppPage = React.lazy(() => import('./pages/App').then(m => ({ default: m.App })))
 const BriefDetail = React.lazy(() => import('./pages/BriefDetail').then(m => ({ default: m.BriefDetail })))
 const Analytics = React.lazy(() => import('./pages/Analytics').then(m => ({ default: m.Analytics })))
+const Outreach = React.lazy(() => import('./pages/Outreach').then(m => ({ default: m.Outreach })))
 const Settings = React.lazy(() => import('./pages/Settings').then(m => ({ default: m.Settings })))
 const Contact = React.lazy(() => import('./pages/Contact').then(m => ({ default: m.Contact })))
 const Help = React.lazy(() => import('./pages/Help').then(m => ({ default: m.Help })))
@@ -19,6 +21,7 @@ const Docs = React.lazy(() => import('./pages/Docs').then(m => ({ default: m.Doc
 const Updates = React.lazy(() => import('./pages/Updates'));
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react"
+
 function App() {
   return (
     <AuthProvider>
@@ -38,6 +41,11 @@ function App() {
               <Route path="/analytics" element={
                 <AuthGuard>
                   <Analytics />
+                </AuthGuard>
+              } />
+              <Route path="/outreach" element={
+                <AuthGuard>
+                  <Outreach />
                 </AuthGuard>
               } />
               <Route path="/settings" element={
