@@ -28,14 +28,18 @@ interface Message {
   explanation?: string
 }
 
-interface OutreachSession {
+interface HistorySession {
   id: string
   brief_id: string
   session_name: string
   messages: Message[]
   created_at: string
   updated_at: string
-  briefs?: Brief
+  briefs?: {
+    companyName: string
+    website?: string
+    signalTag: string
+  }
 }
 
 const OUTCOME_CHIPS = [
@@ -55,7 +59,6 @@ export function OutreachTab() {
   const [showAddBrief, setShowAddBrief] = useState(false)
   const [showHistory, setShowHistory] = useState(false)
   const [showOutcomes, setShowOutcomes] = useState(false)
-  const [lastDraftType, setLastDraftType] = useState<string>('')
   const [copiedId, setCopiedId] = useState<string>('')
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
@@ -84,7 +87,6 @@ export function OutreachTab() {
     if (!activeBrief || !user) return
 
     setIsGenerating(true)
-    setLastDraftType(draftType)
 
     try {
       const response = await fetch(`https://yxqvopuiwpplgszmgpeo.supabase.co/functions/v1/generate-draft`, {
@@ -176,33 +178,26 @@ export function OutreachTab() {
     setActiveBrief(null)
     setMessages([])
     setShowOutcomes(false)
-    setLastDraftType('')
   }
 
-  const handleSaveSession = async () => {
-    if (!activeBrief || !user || messages.length === 0) return
-
-    try {
-      await fetch(`https://yxqvopuiwpplgszmgpeo.supabase.co/functions/v1/save-outreach-session`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4cXZvcHVpd3BwbGdzem1ncGVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5NDg5ODAsImV4cCI6MjA2NjUyNDk4MH0.CPOr1Y78Gf08Gxs8-z2_YrBnFhBQyBGoIuvgfSNl1Co`,
-        },
-        body: JSON.stringify({
-          brief_id: activeBrief.id,
-          messages,
-          session_name: `${activeBrief.companyName} - ${new Date().toLocaleDateString()}`,
-          user_id: user.id
-        }),
-      })
-    } catch (error) {
-      console.error('Error saving session:', error)
+  const handleLoadSession = (session: HistorySession) => {
+    // Convert HistorySession to match our Brief interface
+    const sessionBrief: Brief = {
+      id: session.brief_id,
+      companyName: session.briefs?.companyName || 'Unknown Company',
+      website: session.briefs?.website,
+      signalTag: session.briefs?.signalTag || '',
+      userIntent: '',
+      summary: '',
+      news: [],
+      techStack: [],
+      pitchAngle: '',
+      subjectLine: '',
+      whatNotToPitch: '',
+      createdAt: session.created_at
     }
-  }
-
-  const handleLoadSession = (session: OutreachSession) => {
-    setActiveBrief(session.briefs as Brief)
+    
+    setActiveBrief(sessionBrief)
     setMessages(session.messages)
     setShowHistory(false)
   }

@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { X, Search, Building2, Globe, ExternalLink, TrendingUp } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { X, Search, Building2, Globe, TrendingUp } from 'lucide-react'
 import { Brief, briefsService } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 

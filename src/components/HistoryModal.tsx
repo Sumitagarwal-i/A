@@ -36,6 +36,8 @@ export function HistoryModal({ isOpen, onClose, onLoadSession }: HistoryModalPro
   }, [isOpen, user])
 
   const loadSessions = async () => {
+    if (!user) return
+    
     try {
       setIsLoading(true)
       const response = await fetch(`https://yxqvopuiwpplgszmgpeo.supabase.co/functions/v1/get-outreach-sessions`, {
